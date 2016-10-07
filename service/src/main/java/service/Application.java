@@ -1,7 +1,7 @@
 package service;
 
-import common.Answer;
-import common.Question;
+import common.data.Answer;
+import common.data.Question;
 
 public class Application {
 	public static void main(String[] args) {

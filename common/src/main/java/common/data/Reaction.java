@@ -1,4 +1,4 @@
-package common;
+package common.data;
 
 public class Reaction {
 	private long id;

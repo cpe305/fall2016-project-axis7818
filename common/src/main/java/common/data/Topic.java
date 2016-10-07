@@ -1,4 +1,4 @@
-package common;
+package common.data;
 
 public class Topic {
 	private long id;
