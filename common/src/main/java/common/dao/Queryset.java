@@ -1,7 +1,7 @@
 package common.dao;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
-public abstract class Queryset<T> extends ArrayList<T> {
+public abstract class Queryset<T> extends LinkedList<T> {
 	private static final long serialVersionUID = 1L;
 }

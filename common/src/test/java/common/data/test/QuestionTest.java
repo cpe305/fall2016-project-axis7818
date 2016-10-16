@@ -1,4 +1,4 @@
-package common.test;
+package common.data.test;
 
 import java.util.Date;
 

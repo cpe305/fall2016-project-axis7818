@@ -1,4 +1,4 @@
-package common.test;
+package common.data.test;
 
 import org.junit.Assert;
 import org.junit.Test;
