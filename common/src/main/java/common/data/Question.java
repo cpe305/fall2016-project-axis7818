@@ -2,7 +2,7 @@ package common.data;
 
 import java.util.Date;
 
-public class Question {
+public class Question implements Reactable {
 	private long id;
 	private Topic topic;
 	private String text;
@@ -59,5 +59,38 @@ public class Question {
 	@Override
 	public String toString() {
 		return text;
+	}
+
+	@Override
+	public int like() {
+		this.reaction.Like();
+		return this.reaction.getLikes();
+	}
+
+	@Override
+	public int dislike() {
+		this.reaction.Dislike();
+		return this.reaction.getDislikes();
+	}
+
+	@Override
+	public int laugh() {
+		this.reaction.Laugh();
+		return this.reaction.getLaughs();
+	}
+
+	@Override
+	public int getLikes() {
+		return this.reaction.getLikes();
+	}
+
+	@Override
+	public int getDislikes() {
+		return this.reaction.getDislikes();
+	}
+
+	@Override
+	public int getLaughs() {
+		return this.reaction.getLaughs();
 	}
 }
