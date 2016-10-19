@@ -5,7 +5,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import common.data.Question;
+import nowyouknow.common.data.Question;
 
 public class QuestionTest {
 	public static final String qText = "What is the answer to life, the universe, and everything?!";

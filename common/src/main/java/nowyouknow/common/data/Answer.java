@@ -1,27 +1,21 @@
-package common.data;
+package nowyouknow.common.data;
 
 import java.util.Date;
 
-public class Question implements Reactable {
+public class Answer implements Reactable {
 	private long id;
-	private Topic topic;
-	private String text;
+	private Question question;
 	private Reaction reaction;
-	private boolean open;
-	private Date whenAsked;
+	private String text;
+	private Date whenAnswered;
 	
-	public Question() { }
+	public Answer() { }
 	
-	public Question(String text) {
-		this(text, null);
-	}
-	
-	public Question(String text, Topic topic) {
-		this.topic = topic;
+	public Answer(Question question, String text) {
+		this.question = question;
 		this.text = text;
 		this.reaction = new Reaction();
-		this.open = true;
-		this.whenAsked = new Date();
+		this.whenAnswered = new Date();
 	}
 	
 	public long getId() {
@@ -32,24 +26,12 @@ public class Question implements Reactable {
 		this.id = id;
 	}
 	
-	public Date getWhenAsked() {
-		return whenAsked;
+	public Date getWhenAnswered() {
+		return whenAnswered;
 	}
 	
-	public Topic getTopic() {
-		return topic;
-	}
-	
-	public boolean isOpen() {
-		return open;
-	}
-	
-	public void Open() {
-		this.open = true;
-	}
-	
-	public void Close() {
-		this.open = false;
+	public Question getQuestion() {
+		return question;
 	}
 	
 	public Reaction getReaction() {
@@ -58,7 +40,7 @@ public class Question implements Reactable {
 	
 	@Override
 	public String toString() {
-		return text;
+		return String.format("%s - %s", question.toString(), text);
 	}
 
 	@Override

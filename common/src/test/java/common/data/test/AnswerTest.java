@@ -5,8 +5,8 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
-import common.data.Answer;
-import common.data.Question;
+import nowyouknow.common.data.Answer;
+import nowyouknow.common.data.Question;
 
 public class AnswerTest {
 	public static final String aText = "42";

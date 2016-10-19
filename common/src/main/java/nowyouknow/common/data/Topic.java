@@ -1,4 +1,4 @@
-package common.data;
+package nowyouknow.common.data;
 
 public class Topic {
 	private long id;

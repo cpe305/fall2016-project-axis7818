@@ -1,4 +1,4 @@
-package common.dao;
+package nowyouknow.common.dao;
 
 import java.util.LinkedList;
 

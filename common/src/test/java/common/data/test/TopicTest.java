@@ -3,7 +3,7 @@ package common.data.test;
 import org.junit.Assert;
 import org.junit.Test;
 
-import common.data.Topic;
+import nowyouknow.common.data.Topic;
 
 public class TopicTest {
 	public static final String tText = "Hitchhiker's Guide to the Galaxy";
