@@ -10,8 +10,8 @@ public interface QuestionDAO {
 	public void save(Question question);
 	
 	// Read
-	public List<Question> get(Topic topic);
-	public List<Question> get(Topic topic, int count);
+	public List<Question> list(Topic topic);
+	public List<Question> list(Topic topic, int count);
 	public Question get(long id);
 	
 	// Update

@@ -10,8 +10,8 @@ public interface AnswerDAO {
 	public void save(Answer answer);
 	
 	// Read
-	public List<Answer> get(Question question);
-	public List<Answer> get(Question question, int count);
+	public List<Answer> list(Question question);
+	public List<Answer> list(Question question, int count);
 	public Answer get(long id);
 	
 	// Update

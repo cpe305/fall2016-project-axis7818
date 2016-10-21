@@ -9,8 +9,9 @@ public interface TopicDAO {
 	public void save(Topic topic);
 	
 	// Read
-	public List<Topic> get(long id);
-	public List<Topic> get(String name);
+	public List<Topic> list();
+	public Topic get(long id);
+	public Topic get(String name);
 	
 	// Update
 	public void update(Topic topic);
