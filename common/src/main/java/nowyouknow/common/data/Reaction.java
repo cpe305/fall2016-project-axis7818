@@ -1,54 +1,19 @@
 package nowyouknow.common.data;
 
-public class Reaction {
-	private long id;
-	private int likes;
-	private int dislikes;
-	private int laughs;
+import java.io.Serializable;
+
+public class Reaction implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
-	public Reaction() {
-		this(0, 0, 0);
-	}
+	public Long id;
+	public Integer likes;
+	public Integer dislikes;
+	public Integer laughs;
+
+	public Reaction() { }
 	
-	public Reaction(int likes, int dislikes, int laughs) {
-		this.likes = likes;
-		this.dislikes = dislikes;
-		this.laughs = laughs;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public int getLikes() {
-		return likes;
-	}
-	
-	public int getDislikes() {
-		return dislikes;
-	}
-	
-	public int getLaughs() {
-		return laughs;
-	}
-	
-	public int netLikes() {
-		return likes - dislikes;
-	}
-	
-	public void Like() {
-		++likes;
-	}
-	
-	public void Dislike() {
-		++dislikes;
-	}
-	
-	public void Laugh() {
-		++laughs;
+	@Override
+	public String toString() {
+		return String.format("<Reaction: id=%d>", this.id);
 	}
 }

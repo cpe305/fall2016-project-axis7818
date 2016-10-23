@@ -1,24 +1,17 @@
 package nowyouknow.common.data;
 
-public class Topic {
-	private long id;
-	private String name;
+import java.io.Serializable;
+
+public class Topic implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	public Long id;
+	public String name;
 	
 	public Topic() { }
 	
-	public Topic(String name) {
-		this.name = name;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public String getName() {
-		return name;
+	@Override
+	public String toString() {
+		return String.format("<Topic: id=%d>", this.id);
 	}
 }

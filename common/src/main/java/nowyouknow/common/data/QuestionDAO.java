@@ -1,9 +1,6 @@
-package nowyouknow.common.dao;
+package nowyouknow.common.data;
 
 import java.util.List;
-
-import nowyouknow.common.data.Question;
-import nowyouknow.common.data.Topic;
 
 public interface QuestionDAO {
 	// Create 
@@ -12,12 +9,12 @@ public interface QuestionDAO {
 	// Read
 	public List<Question> list(Topic topic);
 	public List<Question> list(Topic topic, int count);
-	public Question get(long id);
+	public Question get(Long id);
 	
 	// Update
 	public void update(Question question);
 	
 	// Delete
 	public void delete(Question question);
-	public void delete(long id);
+	public void delete(Long id);
 }
