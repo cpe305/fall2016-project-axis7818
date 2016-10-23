@@ -14,6 +14,13 @@ public class Answer implements Serializable {
 
 	public Answer() { }
 	
+	public Answer(Question question, String text) {
+		this.question = question;
+		this.text = text;
+		this.whenAnswered = new Date();
+		this.reaction = new Reaction();
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("<Answer id=%d>", this.id);

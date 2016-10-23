@@ -10,6 +10,10 @@ public class Topic implements Serializable {
 	
 	public Topic() { }
 	
+	public Topic(String name) {
+		this.name = name;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("<Topic: id=%d>", this.id);

@@ -15,6 +15,22 @@ public class Question implements Serializable {
 	
 	public Question() { }
 	
+	public Question(String text) {
+		this(text, null);
+	}
+	
+	public Question(String text, Topic topic) {
+		this.text = text;
+		this.topic = topic;
+		this.open = true;
+		this.whenAsked = new Date();
+		this.reaction = new Reaction();
+	}
+	
+	public void close() {
+		this.open = false;
+	}
+	
 	@Override
 	public String toString() {
 		return String.format("<Question: id=%d>", this.id);

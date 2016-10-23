@@ -1,9 +1,16 @@
 package common.data.test;
 
+import java.util.Date;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import nowyouknow.common.data.Answer;
+import nowyouknow.common.data.Question;
+
 public class AnswerTest {
 	public static final String aText = "42";
 
-	/* TEMPORARILY DISABLE TESTING UNTIL THE FUNCTIONALITY IS RE-IMPLEMENTED
 	@Test
 	public void makeAnswerTest() {
 		Question q = new Question(QuestionTest.qText);
@@ -11,18 +18,16 @@ public class AnswerTest {
 		Date before = new Date();
 		Answer a = new Answer(q, aText);
 		Date after = new Date();
+				
+		Assert.assertTrue(before.compareTo(a.whenAnswered) <= 0);
+		Assert.assertTrue(after.compareTo(a.whenAnswered) >= 0);
 		
-		Assert.assertEquals(String.format("%s - %s", q.toString(), aText), a.toString());
+		Assert.assertEquals(a.question, q);
+		Assert.assertNotNull(a.question);
 		
-		Assert.assertTrue(before.compareTo(a.getWhenAnswered()) <= 0);
-		Assert.assertTrue(after.compareTo(a.getWhenAnswered()) >= 0);
-		
-		Assert.assertEquals(a.getQuestion(), q);
-		Assert.assertNotNull(a.getReaction());
-		
-		Assert.assertEquals(a.getLikes(), 0);
-		Assert.assertEquals(a.getDislikes(), 0);
-		Assert.assertEquals(a.getLaughs(), 0);
+		Assert.assertEquals((int)a.reaction.likes, 0);
+		Assert.assertEquals((int)a.reaction.dislikes, 0);
+		Assert.assertEquals((int)a.reaction.laughs, 0);
 	}
 	
 	@Test
@@ -30,17 +35,16 @@ public class AnswerTest {
 		Question q = new Question(QuestionTest.qText);
 		Answer a = new Answer(q, aText);
 		
-		Assert.assertEquals(a.getLikes(), 0);
-		Assert.assertEquals(a.getDislikes(), 0);
-		Assert.assertEquals(a.getLaughs(), 0);
+		Assert.assertEquals((int)a.reaction.likes, 0);
+		Assert.assertEquals((int)a.reaction.dislikes, 0);
+		Assert.assertEquals((int)a.reaction.laughs, 0);
 		
-		Assert.assertEquals(a.like(), 1);
-		Assert.assertEquals(a.dislike(), 1);
-		Assert.assertEquals(a.laugh(), 1);
+		Assert.assertEquals((int)a.reaction.like(), 1);
+		Assert.assertEquals((int)a.reaction.dislike(), 1);
+		Assert.assertEquals((int)a.reaction.laugh(), 1);
 		
-		Assert.assertEquals(a.like(), a.getLikes());
-		Assert.assertEquals(a.dislike(), a.getDislikes());
-		Assert.assertEquals(a.laugh(), a.getLaughs());
+		Assert.assertEquals(a.reaction.like(), a.reaction.likes);
+		Assert.assertEquals(a.reaction.dislike(), a.reaction.dislikes);
+		Assert.assertEquals(a.reaction.laugh(), a.reaction.laughs);
 	}
-	*/
 }

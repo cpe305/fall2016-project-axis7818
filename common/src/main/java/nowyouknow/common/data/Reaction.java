@@ -10,7 +10,23 @@ public class Reaction implements Serializable {
 	public Integer dislikes;
 	public Integer laughs;
 
-	public Reaction() { }
+	public Reaction() { 
+		this.likes = 0;
+		this.dislikes = 0;
+		this.laughs = 0;
+	}
+	
+	public Integer like() {
+		return ++this.likes;
+	}
+	
+	public Integer dislike() {
+		return ++this.dislikes;
+	}
+	
+	public Integer laugh() {
+		return ++this.laughs;
+	}
 	
 	@Override
 	public String toString() {
