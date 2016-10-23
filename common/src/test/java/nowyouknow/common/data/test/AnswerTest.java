@@ -1,4 +1,4 @@
-package common.data.test;
+package nowyouknow.common.data.test;
 
 import java.util.Date;
 

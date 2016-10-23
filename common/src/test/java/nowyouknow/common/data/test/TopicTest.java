@@ -1,4 +1,4 @@
-package common.data.test;
+package nowyouknow.common.data.test;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,6 +12,6 @@ public class TopicTest {
 	public void makeTopicTest() {
 		Topic t = new Topic(tText);
 		
-		Assert.assertEquals(t.name, tText);
+		Assert.assertEquals(t.getName(), tText);
 	}
 }

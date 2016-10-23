@@ -1,0 +1,33 @@
+package nowyouknow.service.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import nowyouknow.common.data.Topic;
+import nowyouknow.common.data.TopicDAO;
+
+@Controller()
+@RequestMapping("/topic")
+public class TopicController {
+	@Autowired
+	private TopicDAO topicDao;
+	
+	@RequestMapping(value="/create", method=RequestMethod.POST)
+	@ResponseBody
+	public String create(String name) {
+		Topic topic = null;
+		
+		try {
+			topic = new Topic(name);
+			topicDao.save(topic);
+		}
+		catch (Exception e) {
+			return String.format("Error creating Topic (%s): %s", name, e.getMessage());
+		}
+		
+		return String.format("Topic (%s) created successfully!", topic.getName());
+	}
+}

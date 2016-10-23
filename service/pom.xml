@@ -7,15 +7,25 @@
   </parent>
   <artifactId>service</artifactId>
   <dependencies>
+  	<!-- Logging -->
   	<dependency>
   		<groupId>log4j</groupId>
   		<artifactId>log4j</artifactId>
   		<version>1.2.17</version>
   	</dependency>
+  	
+  	<!-- Common Packages -->
   	<dependency>
   		<groupId>com.cameroncode</groupId>
   		<artifactId>common</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  	
+  	<!-- Spring -->
+  	<dependency>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-starter-web</artifactId>
+  	</dependency>
+  	
   </dependencies>
 </project>
