@@ -13,7 +13,7 @@ public class Question implements Serializable {
 	public Topic topic;
 	public Reaction reaction;
 	
-	public Question() { }
+	protected Question() { }
 	
 	public Question(String text) {
 		this(text, null);

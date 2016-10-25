@@ -12,7 +12,7 @@ public class Answer implements Serializable {
 	public Question question;
 	public Reaction reaction;
 
-	public Answer() { }
+	protected Answer() { }
 	
 	public Answer(Question question, String text) {
 		this.question = question;
