@@ -16,8 +16,8 @@ import nowyouknow.common.data.TopicDAO;
 public class TopicController {
 	private static final Logger log = LoggerFactory.getLogger(TopicController.class);
 	
-	@Autowired
-	private TopicDAO topicDao;
+//	@Autowired
+//	private TopicDAO topicDao;
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	@ResponseBody
@@ -27,7 +27,7 @@ public class TopicController {
 		try {
 			topic = new Topic(name);
 			log.info("Saving new topic: %s", name);
-			topicDao.save(topic);
+//			topicDao.save(topic);
 		}
 		catch (Exception e) {
 			return String.format("Error creating Topic (%s): %s", name, e.getMessage());
