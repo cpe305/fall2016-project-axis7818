@@ -16,8 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TopicController {
   private static final Logger log = LoggerFactory.getLogger(TopicController.class);
 
-//  @Autowired
-//  private TopicDao topicDao;
+  @Autowired
+  private TopicDao topicDao;
+
+  @RequestMapping(value = "/", method = RequestMethod.GET)
+  @ResponseBody
+  public String topicIndex() {
+    log.info("topic index");
+    return "<p>topic index</p>";
+  }
 
   /**
    * Create a new Topic.
@@ -33,7 +40,7 @@ public class TopicController {
     try {
       topic = new Topic(name);
       log.info("Saving new topic: %s", name);
-//      topicDao.save(topic);
+      topicDao.save(topic);
     } catch (Exception ex) {
       return String.format("Error creating Topic (%s): %s", name, ex.getMessage());
     }

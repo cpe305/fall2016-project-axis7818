@@ -1,14 +1,28 @@
 package nowyouknow.common.data;
 
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-public class Reaction implements Serializable {
-  private static final long serialVersionUID = 1L;
-
-  public Long id;
-  public Integer likes;
-  public Integer dislikes;
-  public Integer laughs;
+@Entity
+@Table(name = "reaction")   
+public class Reaction {
+  
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  
+  @NotNull
+  private Integer likes;
+  
+  @NotNull
+  private Integer dislikes;
+  
+  @NotNull
+  private Integer laughs;
 
   /**
    * Create a new reaction.
@@ -18,6 +32,42 @@ public class Reaction implements Serializable {
     this.dislikes = 0;
     this.laughs = 0;
   }
+  
+  /* GETTERS AND SETTERS */
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Integer getLikes() {
+    return likes;
+  }
+
+  public void setLikes(Integer likes) {
+    this.likes = likes;
+  }
+
+  public Integer getDislikes() {
+    return dislikes;
+  }
+
+  public void setDislikes(Integer dislikes) {
+    this.dislikes = dislikes;
+  }
+
+  public Integer getLaughs() {
+    return laughs;
+  }
+
+  public void setLaughs(Integer laughs) {
+    this.laughs = laughs;
+  }
+  
+  /* END GETTERS AND SETTERS */
 
   public Integer like() {
     return ++this.likes;

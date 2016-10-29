@@ -24,6 +24,8 @@ public class Topic {
     this.name = name;
   }
 
+  /* GETTERS AND SETTERS */
+
   public Long getId() {
     return id;
   }
@@ -39,6 +41,8 @@ public class Topic {
   public void setName(String name) {
     this.name = name;
   }
+
+  /* END GETTERS AND SETTERS */
 
   @Override
   public String toString() {

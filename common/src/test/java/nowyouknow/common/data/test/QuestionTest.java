@@ -16,42 +16,42 @@ public class QuestionTest {
     Question question = new Question(qText);
     Date after = new Date();
 
-    Assert.assertTrue(question.open);
+    Assert.assertTrue(question.getOpen());
 
-    Assert.assertTrue(before.compareTo(question.whenAsked) <= 0);
-    Assert.assertTrue(after.compareTo(question.whenAsked) >= 0);
+    Assert.assertTrue(before.compareTo(question.getWhenAsked()) <= 0);
+    Assert.assertTrue(after.compareTo(question.getWhenAsked()) >= 0);
 
-    Assert.assertNull(question.topic);
-    Assert.assertNotNull(question.reaction);
+    Assert.assertNull(question.getTopic());
+    Assert.assertNotNull(question.getReaction());
 
-    Assert.assertEquals((int) question.reaction.likes, 0);
-    Assert.assertEquals((int) question.reaction.dislikes, 0);
-    Assert.assertEquals((int) question.reaction.laughs, 0);
+    Assert.assertEquals((int) question.getReaction().getLikes(), 0);
+    Assert.assertEquals((int) question.getReaction().getDislikes(), 0);
+    Assert.assertEquals((int) question.getReaction().getLaughs(), 0);
   }
 
   @Test
   public void closeQuestionTest() {
     Question question = new Question(qText);
 
-    Assert.assertTrue(question.open);
+    Assert.assertTrue(question.getOpen());
     question.close();
-    Assert.assertFalse(question.open);
+    Assert.assertFalse(question.getOpen());
   }
 
   @Test
   public void reactToQuestionTest() {
     Question question = new Question(qText);
 
-    Assert.assertEquals((int) question.reaction.likes, 0);
-    Assert.assertEquals((int) question.reaction.dislikes, 0);
-    Assert.assertEquals((int) question.reaction.laughs, 0);
+    Assert.assertEquals((int) question.getReaction().getLikes(), 0);
+    Assert.assertEquals((int) question.getReaction().getDislikes(), 0);
+    Assert.assertEquals((int) question.getReaction().getLaughs(), 0);
 
-    Assert.assertEquals((int) question.reaction.like(), 1);
-    Assert.assertEquals((int) question.reaction.dislike(), 1);
-    Assert.assertEquals((int) question.reaction.laugh(), 1);
+    Assert.assertEquals((int) question.getReaction().like(), 1);
+    Assert.assertEquals((int) question.getReaction().dislike(), 1);
+    Assert.assertEquals((int) question.getReaction().laugh(), 1);
 
-    Assert.assertEquals(question.reaction.like(), question.reaction.likes);
-    Assert.assertEquals(question.reaction.dislike(), question.reaction.dislikes);
-    Assert.assertEquals(question.reaction.laugh(), question.reaction.laughs);
+    Assert.assertEquals(question.getReaction().like(), question.getReaction().getLikes());
+    Assert.assertEquals(question.getReaction().dislike(), question.getReaction().getDislikes());
+    Assert.assertEquals(question.getReaction().laugh(), question.getReaction().getLaughs());
   }
 }
