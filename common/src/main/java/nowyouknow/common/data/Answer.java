@@ -4,25 +4,31 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Answer implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	public Long id;
-	public String text;
-	public Date whenAnswered;
-	public Question question;
-	public Reaction reaction;
+  private static final long serialVersionUID = 1L;
 
-	protected Answer() { }
-	
-	public Answer(Question question, String text) {
-		this.question = question;
-		this.text = text;
-		this.whenAnswered = new Date();
-		this.reaction = new Reaction();
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("<Answer id=%d>", this.id);
-	}
+  public Long id;
+  public String text;
+  public Date whenAnswered;
+  public Question question;
+  public Reaction reaction;
+
+  protected Answer() {}
+
+  /**
+   * Create a new Answer.
+   * 
+   * @param question the question that the answer belongs to.
+   * @param text the text content of the Answer
+   */
+  public Answer(Question question, String text) {
+    this.question = question;
+    this.text = text;
+    this.whenAnswered = new Date();
+    this.reaction = new Reaction();
+  }
+
+  @Override
+  public String toString() {
+    return String.format("<Answer id=%d>", this.id);
+  }
 }
