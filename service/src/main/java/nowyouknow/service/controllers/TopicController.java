@@ -1,9 +1,11 @@
 package nowyouknow.service.controllers;
 
+import nowyouknow.common.dao.TopicDao;
 import nowyouknow.common.data.Topic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TopicController {
   private static final Logger log = LoggerFactory.getLogger(TopicController.class);
 
-  // @Autowired
-  // private TopicDAO topicDao;
+//  @Autowired
+//  private TopicDao topicDao;
 
   /**
    * Create a new Topic.
@@ -31,7 +33,7 @@ public class TopicController {
     try {
       topic = new Topic(name);
       log.info("Saving new topic: %s", name);
-      // topicDao.save(topic);
+//      topicDao.save(topic);
     } catch (Exception ex) {
       return String.format("Error creating Topic (%s): %s", name, ex.getMessage());
     }
