@@ -30,6 +30,7 @@ public class Question {
   private Topic topic;
 
   @OneToOne
+  @NotNull
   private Reaction reaction;
 
   protected Question() {}

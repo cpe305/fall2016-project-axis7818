@@ -1,0 +1,192 @@
+{
+	"variables": [],
+	"info": {
+		"name": "NowYouKnow",
+		"_postman_id": "028ce7ab-ca76-0410-4038-c7eb9190000a",
+		"description": "Testing the Now You Know web application\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HitchhikersGuideToTheGalaxy",
+			"description": "The first test suite for Now You Know. Simple test cases for basic functionality.",
+			"item": [
+				{
+					"name": "NUKE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/end/of/the/universe",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "topic index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/topic/",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "question index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "answer index",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/answer/",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Topic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (tests[\"Status code is 200\"]) {\n    var topic = JSON.parse(responseBody);\n    tests[\"topic not null\"] = topic !== null;\n    postman.setEnvironmentVariable(\"hhgttgTopicId\", topic.id);\n}\nelse {\n    postman.clearEnvironmentVariable(\"hhgttgTopicId\");\n}"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/topic/create?name=HHGTTG",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Question of Life",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var question = JSON.parse(responseBody);\n    tests[\"question not null\"] = question !== null;\n    postman.setEnvironmentVariable(\"questionOfLifeId\", question.id);\n}\nelse {\n    postman.clearEnvironmentVariable(\"questionOfLifeId\");\n}"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/create?text=What%20is%20the%20answer%20to%20life?&topicId={{hhgttgTopicId}}",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Question",
+					"request": {
+						"url": "{{host}}/answer/create?text=42&questionId={{questionOfLifeId}}",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

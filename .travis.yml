@@ -1,3 +1,10 @@
 language: java
 sudo: false
 script: mvn clean verify
+
+services:
+   - mysql
+
+before_script:
+   - mysql -e 'create database nowyouknow;' -u root
+   - mysql -e 'grant all on nowyouknow.* to travis;' -u root

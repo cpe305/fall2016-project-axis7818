@@ -6,6 +6,8 @@ import nowyouknow.common.data.Topic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,19 +34,15 @@ public class TopicController {
    * @param name the name of the topic
    * @return A String result
    */
-  @RequestMapping(value = "/create", method = RequestMethod.POST)
+  @RequestMapping(value = "/create", method = RequestMethod.POST,
+      produces = MediaType.APPLICATION_JSON_VALUE)
   @ResponseBody
-  public String create(String name) {
-    Topic topic = null;
+  public ResponseEntity<Topic> create(String name) {
+    Topic topic = new Topic(name);
+    
+    log.info("Saving new topic: %s", name);
+    topicDao.save(topic);
 
-    try {
-      topic = new Topic(name);
-      log.info("Saving new topic: %s", name);
-      topicDao.save(topic);
-    } catch (Exception ex) {
-      return String.format("Error creating Topic (%s): %s", name, ex.getMessage());
-    }
-
-    return String.format("Topic (%s) created successfully!", topic.getName());
+    return ResponseEntity.ok().body(topic);
   }
 }

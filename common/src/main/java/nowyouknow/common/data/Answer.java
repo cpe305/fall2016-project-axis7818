@@ -25,9 +25,11 @@ public class Answer {
   private Date whenAnswered;
 
   @ManyToOne
+  @NotNull
   private Question question;
 
   @OneToOne
+  @NotNull
   private Reaction reaction;
 
   protected Answer() {}
