@@ -2,6 +2,7 @@ package nowyouknow.common.data;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,21 +16,10 @@ import javax.validation.constraints.NotNull;
 @Table(name = "answer")
 public class Answer {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
-  @NotNull
   private String text;
-
   private Date whenAnswered;
-
-  @ManyToOne
-  @NotNull
   private Question question;
-
-  @OneToOne
-  @NotNull
   private Reaction reaction;
 
   protected Answer() {}
@@ -49,6 +39,8 @@ public class Answer {
 
   /* GETTERS AND SETTERS */
   
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
   }
@@ -57,6 +49,7 @@ public class Answer {
     this.id = id;
   }
 
+  @NotNull
   public String getText() {
     return text;
   }
@@ -72,7 +65,8 @@ public class Answer {
   public void setWhenAnswered(Date whenAnswered) {
     this.whenAnswered = whenAnswered;
   }
-
+  
+  @ManyToOne(cascade = CascadeType.ALL)
   public Question getQuestion() {
     return question;
   }
@@ -81,6 +75,8 @@ public class Answer {
     this.question = question;
   }
 
+  @OneToOne
+  @NotNull
   public Reaction getReaction() {
     return reaction;
   }

@@ -1,12 +1,16 @@
 package nowyouknow.common.data;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -15,23 +19,13 @@ import javax.validation.constraints.NotNull;
 @Table(name = "question")
 public class Question {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
-  @NotNull
   private String text;
-
   private Boolean open;
-
   private Date whenAsked;
-
-  @ManyToOne
   private Topic topic;
-
-  @OneToOne
-  @NotNull
   private Reaction reaction;
+  private List<Answer> answers;
 
   protected Question() {}
 
@@ -41,9 +35,6 @@ public class Question {
 
   /**
    * Create a new Question.
-   * 
-   * @param text the question's text.
-   * @param topic the topic that this quesiton is part of (null for none)
    */
   public Question(String text, Topic topic) {
     this.text = text;
@@ -55,6 +46,8 @@ public class Question {
 
   /* GETTERS AND SETTERS */
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
   }
@@ -63,6 +56,7 @@ public class Question {
     this.id = id;
   }
 
+  @NotNull
   public String getText() {
     return text;
   }
@@ -87,6 +81,7 @@ public class Question {
     this.whenAsked = whenAsked;
   }
 
+  @ManyToOne(cascade = CascadeType.ALL)
   public Topic getTopic() {
     return topic;
   }
@@ -95,12 +90,23 @@ public class Question {
     this.topic = topic;
   }
 
+  @OneToOne
+  @NotNull
   public Reaction getReaction() {
     return reaction;
   }
 
   public void setReaction(Reaction reaction) {
     this.reaction = reaction;
+  }
+  
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.LAZY)
+  public List<Answer> getAnswers() {
+    return answers;
+  }
+  
+  public void setAnswers(List<Answer> answers) {
+    this.answers = answers;
   }
 
   /* END GETTERS AND SETTERS */

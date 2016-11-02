@@ -5,18 +5,24 @@ import nowyouknow.common.dao.ReactionDao;
 import nowyouknow.common.dao.TopicDao;
 import nowyouknow.common.data.Question;
 import nowyouknow.common.data.Topic;
+import nowyouknow.service.results.JsonQuestion;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller()
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@RestController()
 @RequestMapping("/question")
 public class QuestionController {
   private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
@@ -26,39 +32,63 @@ public class QuestionController {
 
   @Autowired
   private QuestionDao questionDao;
-  
+
   @Autowired
   private TopicDao topicDao;
 
-  @RequestMapping(value = "/", method = RequestMethod.GET)
-  @ResponseBody
-  public String questionIndex() {
-    log.info("question index");
-    return "<p>question index</p>";
-  }
-
   /**
    * Create a new Question.
-   * 
-   * @param text the text for the question
-   * @param topicId the id of the topic that the question should fall under
-   * @return a String result
    */
-  @RequestMapping(value = "/create", method = RequestMethod.POST,
-      produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseBody
-  public ResponseEntity<Question> create(String text, Long topicId) {
-    Topic topic = topicDao.findOne(topicId);
-    if (topic == null) {
-      log.error("Could not find topic with id {}", topicId);
-      return null;
+  @RequestMapping(value = "/", method = RequestMethod.POST)
+  public void create(HttpServletRequest request, HttpServletResponse response,
+      @RequestBody JsonQuestion newQuestion) throws IOException {
+    if (newQuestion.text == null || newQuestion.text.isEmpty()) {
+      log.error("No text provided when creating a question.");
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      response.getWriter().print("Please provide some text for the question.");
+      return;
     }
-    
-    Question question  = new Question(text, topic);
-    log.info("Saving new Question: %s", text);
+
+    Topic topic = null;
+    if (newQuestion.topicId != null) {
+      topic = topicDao.findOne(newQuestion.topicId);
+      if (topic == null) {
+        log.error("Creating question for topic id {}, but there is no topic with that id!",
+            newQuestion.topicId);
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.getWriter().print("This topic does not exist");
+        return;
+      }
+    }
+
+    log.info("Saving new Question: {}", newQuestion.text);
+    Question question = new Question(newQuestion.text, topic);
     reactionDao.save(question.getReaction());
     questionDao.save(question);
 
-    return ResponseEntity.ok().body(question);
+    response.setHeader("Location", "/question/" + question.getId());
+  }
+
+  /**
+   * Get a question by id.
+   */
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public JsonQuestion get(HttpServletRequest request, HttpServletResponse response, 
+      @PathVariable Long id) throws IOException {
+    if (id == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      response.getWriter().print("question id required");
+      return null;
+    }
+    
+    Question question = questionDao.findOne(id);
+    if (question == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      response.getWriter().print("Could not find question with id: " + id);
+      return null;
+    }
+    
+    return new JsonQuestion(question);
   }
 }

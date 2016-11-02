@@ -35,111 +35,48 @@
 					"response": []
 				},
 				{
-					"name": "index",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
-							}
-						}
-					],
-					"request": {
-						"url": "{{host}}/",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "topic index",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
-							}
-						}
-					],
-					"request": {
-						"url": "{{host}}/topic/",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "question index",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
-							}
-						}
-					],
-					"request": {
-						"url": "{{host}}/question/",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "answer index",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
-							}
-						}
-					],
-					"request": {
-						"url": "{{host}}/answer/",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
 					"name": "Create Topic",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (tests[\"Status code is 200\"]) {\n    var topic = JSON.parse(responseBody);\n    tests[\"topic not null\"] = topic !== null;\n    postman.setEnvironmentVariable(\"hhgttgTopicId\", topic.id);\n}\nelse {\n    postman.clearEnvironmentVariable(\"hhgttgTopicId\");\n}"
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (tests[\"Status code is 200\"]) {\n    var loc = postman.getResponseHeader(\"Location\");\n    postman.setEnvironmentVariable(\"hhgttgTopicId\", loc.split(\"/\").pop());\n}\nelse {\n    postman.clearEnvironmentVariable(\"hhgttgTopicId\");\n}\n"
 							}
 						}
 					],
 					"request": {
-						"url": "{{host}}/topic/create?name=HHGTTG",
+						"url": "{{host}}/topic/",
 						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{hhgttgName}}\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Topic (By Id)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar topic = JSON.parse(responseBody);\ntests[\"correct name\"] = topic.name === postman.getEnvironmentVariable(\"hhgttgName\");"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/topic/{{hhgttgTopicId}}",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "formdata",
@@ -150,19 +87,19 @@
 					"response": []
 				},
 				{
-					"name": "Create Question of Life",
+					"name": "Get Topic (By Name)",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var question = JSON.parse(responseBody);\n    tests[\"question not null\"] = question !== null;\n    postman.setEnvironmentVariable(\"questionOfLifeId\", question.id);\n}\nelse {\n    postman.clearEnvironmentVariable(\"questionOfLifeId\");\n}"
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar topic = JSON.parse(responseBody);\ntests[\"correct name\"] = topic.name === postman.getEnvironmentVariable(\"hhgttgName\");"
 							}
 						}
 					],
 					"request": {
-						"url": "{{host}}/question/create?text=What%20is%20the%20answer%20to%20life?&topicId={{hhgttgTopicId}}",
-						"method": "POST",
+						"url": "{{host}}/topic/{{hhgttgName}}",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "formdata",
@@ -174,9 +111,113 @@
 				},
 				{
 					"name": "Create Question",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var loc = postman.getResponseHeader(\"Location\");\n    postman.setEnvironmentVariable(\"goMadNowQuestionId\", loc.split(\"/\").pop());\n}\nelse {\n    postman.clearEnvironmentVariable(\"goMadNowQuestionId\");\n}"
+							}
+						}
+					],
 					"request": {
-						"url": "{{host}}/answer/create?text=42&questionId={{questionOfLifeId}}",
+						"url": "{{host}}/question/",
 						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"{{goMadNowName}}\",\n\t\"topicId\": {{hhgttgTopicId}}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Create Question (no topic)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var loc = postman.getResponseHeader(\"Location\");\n    postman.setEnvironmentVariable(\"goMadNowQuestionId\", loc.split(\"/\").pop());\n}\nelse {\n    postman.clearEnvironmentVariable(\"goMadNowQuestionId\");\n}"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"If I asked you where the hell we were, would I regret it?\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Question",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar question = JSON.parse(responseBody);\ntests['correct question'] = question.text === postman.getEnvironmentVariable(\"goMadNowName\");"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/{{goMadNowQuestionId}}",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete topic",
+					"request": {
+						"url": "{{host}}/topic/{{hhgttgName}}",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "NUKE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/end/of/the/universe",
+						"method": "DELETE",
 						"header": [],
 						"body": {
 							"mode": "formdata",

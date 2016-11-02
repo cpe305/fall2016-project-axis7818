@@ -1,9 +1,14 @@
 package nowyouknow.common.data;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -11,12 +16,9 @@ import javax.validation.constraints.NotNull;
 @Table(name = "topic")
 public class Topic {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-
-  @NotNull
   private String name;
+  private List<Question> questions;
 
   protected Topic() {}
 
@@ -26,6 +28,8 @@ public class Topic {
 
   /* GETTERS AND SETTERS */
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
   }
@@ -34,12 +38,22 @@ public class Topic {
     this.id = id;
   }
 
+  @NotNull
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic", fetch = FetchType.LAZY)
+  public List<Question> getQuestions() {
+    return questions;
+  }
+
+  public void setQuestions(List<Question> questions) {
+    this.questions = questions;
   }
 
   /* END GETTERS AND SETTERS */

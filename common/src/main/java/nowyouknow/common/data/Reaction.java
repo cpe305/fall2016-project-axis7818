@@ -11,17 +11,9 @@ import javax.validation.constraints.NotNull;
 @Table(name = "reaction")   
 public class Reaction {
   
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  
-  @NotNull
   private Integer likes;
-  
-  @NotNull
   private Integer dislikes;
-  
-  @NotNull
   private Integer laughs;
 
   /**
@@ -34,7 +26,9 @@ public class Reaction {
   }
   
   /* GETTERS AND SETTERS */
-
+  
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
   }
@@ -43,6 +37,7 @@ public class Reaction {
     this.id = id;
   }
 
+  @NotNull
   public Integer getLikes() {
     return likes;
   }
@@ -51,6 +46,7 @@ public class Reaction {
     this.likes = likes;
   }
 
+  @NotNull
   public Integer getDislikes() {
     return dislikes;
   }
@@ -59,6 +55,7 @@ public class Reaction {
     this.dislikes = dislikes;
   }
 
+  @NotNull
   public Integer getLaughs() {
     return laughs;
   }

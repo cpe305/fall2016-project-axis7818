@@ -9,6 +9,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("nowyouknow.common.data")
 @EnableJpaRepositories("nowyouknow.common.dao")
 public class Application {
+  // TODO: log all requests
+  // http://stackoverflow.com/questions/28723425/logging-controller-requests-spring-boot
+
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Application.class, args);
   }
