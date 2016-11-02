@@ -8,7 +8,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 public interface TopicDao extends CrudRepository<Topic, Long> {
-  public Topic findByName(String name);
-  
-  public void deleteByName(String name);
+  public Topic findByName(String name); // TODO: remove this and manage topics by id
 }

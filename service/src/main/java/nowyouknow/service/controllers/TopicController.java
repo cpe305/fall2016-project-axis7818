@@ -1,7 +1,9 @@
 package nowyouknow.service.controllers;
 
 import nowyouknow.common.dao.TopicDao;
+import nowyouknow.common.data.Question;
 import nowyouknow.common.data.Topic;
+import nowyouknow.service.results.JsonQuestion;
 import nowyouknow.service.results.JsonTopic;
 
 import org.slf4j.Logger;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +43,6 @@ public class TopicController {
     if (newTopic.name == null) {
       log.info("No name provided for topic.");
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("Missing Topic Name");
       return;
     }
 
@@ -51,7 +54,7 @@ public class TopicController {
   }
 
   /**
-   * Retrieve a Topic by id.
+   * Retrieve a Topic by id or name.
    */
   @RequestMapping(value = "/{identifier}", method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,7 +63,6 @@ public class TopicController {
     log.info("GET /topic/" + identifier);
     if (identifier == null) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("topic identifier required");
       return null;
     }
 
@@ -74,18 +76,70 @@ public class TopicController {
     }
 
     if (topic == null) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("could not find topic identifier: " + identifier);
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return null;
     }
 
     return new JsonTopic(topic);
   }
 
-  @RequestMapping(value = "/", method = RequestMethod.PUT)
-  public void update(HttpServletRequest request, HttpServletResponse response,
-      @RequestBody JsonTopic newTopic) {
-    // TODO: fill this in
+  // TODO: don't just return all of the questions
+  /**
+   * Get a list of questions for the topic.
+   */
+  @RequestMapping(value = "/{id}/questions", method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<JsonQuestion> getQuestions(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable Long id) {
+    if (id == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return null;
+    }
+    
+    Topic topic = topicDao.findOne(id);
+    if (topic == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    
+    List<JsonQuestion> result = new ArrayList<JsonQuestion>();
+    for (Question question : topic.getQuestions()) {
+      result.add(new JsonQuestion(question));
+    }
+    return result;
+  }
+
+  /**
+   * Update a topic.
+   */
+  @RequestMapping(value = "/{identifier}", method = RequestMethod.PUT)
+  public JsonTopic update(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable String identifier, @RequestBody JsonTopic newTopic) throws IOException {
+    if (identifier == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return null;
+    }
+
+    // get the current Topic
+    Topic topic = null;
+    try {
+      topic = topicDao.findOne(Long.parseLong(identifier));
+    } catch (NumberFormatException nfe) {
+      topic = topicDao.findByName(identifier);
+    }
+    if (topic == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+
+    // name change?
+    if (newTopic.name != null && !newTopic.name.isEmpty()
+        && !topic.getName().equals(newTopic.name)) {
+      topic.setName(newTopic.name);
+    }
+
+    topicDao.save(topic);
+    return new JsonTopic(topic);
   }
 
   /**
@@ -96,16 +150,22 @@ public class TopicController {
       @PathVariable String identifier) throws IOException {
     if (identifier == null) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("topic identifier required");
       return;
     }
 
+    Topic topic = null;
     try {
-      log.info("Trying to delete topic by id...");
-      topicDao.delete(Long.parseLong(identifier));
+      log.info("Trying to get topic by id...");
+      topic = topicDao.findOne(Long.parseLong(identifier));
     } catch (NumberFormatException nfe) {
-      log.info("Delete by id failed, trying again with name...");
-      topicDao.deleteByName(identifier);
+      log.info("Get by id failed, trying again with name...");
+      topic = topicDao.findByName(identifier);
     }
+    if (topic == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return;
+    }
+
+    topicDao.delete(topic.getId());
   }
 }

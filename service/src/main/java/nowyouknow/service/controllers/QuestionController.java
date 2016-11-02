@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class QuestionController {
   private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
+  @SuppressWarnings("unused")
   @Autowired
   private ReactionDao reactionDao;
 
@@ -63,7 +64,7 @@ public class QuestionController {
 
     log.info("Saving new Question: {}", newQuestion.text);
     Question question = new Question(newQuestion.text, topic);
-    reactionDao.save(question.getReaction());
+    // reactionDao.save(question.getReaction()); TODO: check if this is still necessary
     questionDao.save(question);
 
     response.setHeader("Location", "/question/" + question.getId());
@@ -74,21 +75,51 @@ public class QuestionController {
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public JsonQuestion get(HttpServletRequest request, HttpServletResponse response, 
+  public JsonQuestion get(HttpServletRequest request, HttpServletResponse response,
       @PathVariable Long id) throws IOException {
     if (id == null) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("question id required");
       return null;
     }
-    
+
     Question question = questionDao.findOne(id);
     if (question == null) {
-      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("Could not find question with id: " + id);
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return null;
     }
-    
+
     return new JsonQuestion(question);
+  }
+
+  /**
+   * Update a Question.
+   */
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public JsonQuestion update(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable Long id, @RequestBody JsonQuestion newQuestion) throws IOException {
+    // TODO: check if a PUT to question is necessary.
+    response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
+    return null;
+  }
+
+  /**
+   * Delete a question.
+   */
+  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  public void delete(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable Long id) {
+    if (id == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return;
+    }
+
+    Question question = questionDao.findOne(id);
+    if (question == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return;
+    }
+
+    questionDao.delete(question.getId());
   }
 }

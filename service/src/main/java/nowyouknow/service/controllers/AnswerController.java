@@ -5,6 +5,7 @@ import nowyouknow.common.dao.QuestionDao;
 import nowyouknow.common.dao.ReactionDao;
 import nowyouknow.common.data.Answer;
 import nowyouknow.common.data.Question;
+import nowyouknow.service.results.JsonAnswer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,39 +31,35 @@ public class AnswerController {
   @Autowired
   private AnswerDao answerDao;
 
+  @SuppressWarnings("unused")
   @Autowired
   private ReactionDao reactionDao;
-
-  @RequestMapping(value = "/", method = RequestMethod.GET)
-  public void index(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.getWriter().print("<p>answer index</p>");
-  }
 
   /**
    * Create a new answer for a specific question.
    */
-  @RequestMapping(value = "/create", method = RequestMethod.POST)
+  @RequestMapping(value = "/", method = RequestMethod.POST)
   public void create(HttpServletRequest request, HttpServletResponse response,
-      @RequestBody Answer answer) throws IOException {
+      @RequestBody JsonAnswer newAnswer) throws IOException {
     // validate the answer text
-    if (answer.getText() == null || answer.getText().isEmpty()) {
+    if (newAnswer.text == null || newAnswer.text.isEmpty()) {
       log.error("No text provided when creating an answer.");
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("Please provide some text for the answer.");
       return;
     }
 
     // retrieve the question
-    Question question = questionDao.findOne(answer.getQuestion().getId());
+    Question question = null;
+    if (newAnswer.questionId != null) {
+      question = questionDao.findOne(newAnswer.questionId);
+    }
     if (question == null) {
-      log.error("Could not find question with id {}", answer.getQuestion().getId());
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      response.getWriter().print("This question does not exist.");
       return;
     }
 
-    log.info("Saving answer {}", answer.getText());
-    reactionDao.save(answer.getReaction());
+    log.info("Saving answer {}", newAnswer.text);
+    Answer answer = new Answer(question, newAnswer.text);
     answerDao.save(answer);
 
     response.setHeader("Location", "/answer/" + answer.getId());
