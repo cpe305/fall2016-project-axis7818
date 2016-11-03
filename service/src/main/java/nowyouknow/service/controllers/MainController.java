@@ -8,6 +8,7 @@ import nowyouknow.common.dao.TopicDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +44,8 @@ public class MainController {
   /**
    * Would it save you a lot of time if I just gave up and went mad now?.
    */
-  @RequestMapping(value = "/end/of/the/universe", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/end/of/the/universe", method = RequestMethod.DELETE,
+      produces = MediaType.TEXT_PLAIN_VALUE)
   public void nuke(HttpServletRequest request, HttpServletResponse response) throws IOException {
     log.info("Don't Panic");
 

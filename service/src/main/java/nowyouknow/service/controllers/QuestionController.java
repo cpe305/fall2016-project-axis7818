@@ -3,8 +3,10 @@ package nowyouknow.service.controllers;
 import nowyouknow.common.dao.QuestionDao;
 import nowyouknow.common.dao.ReactionDao;
 import nowyouknow.common.dao.TopicDao;
+import nowyouknow.common.data.Answer;
 import nowyouknow.common.data.Question;
 import nowyouknow.common.data.Topic;
+import nowyouknow.service.results.JsonAnswer;
 import nowyouknow.service.results.JsonQuestion;
 
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 public class QuestionController {
   private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
-  @SuppressWarnings("unused")
   @Autowired
   private ReactionDao reactionDao;
 
@@ -64,7 +67,7 @@ public class QuestionController {
 
     log.info("Saving new Question: {}", newQuestion.text);
     Question question = new Question(newQuestion.text, topic);
-    // reactionDao.save(question.getReaction()); TODO: check if this is still necessary
+    reactionDao.save(question.getReaction());
     questionDao.save(question);
 
     response.setHeader("Location", "/question/" + question.getId());
@@ -89,6 +92,32 @@ public class QuestionController {
     }
 
     return new JsonQuestion(question);
+  }
+
+  /**
+   * Get all answers for a question.
+   */
+  @RequestMapping(value = "/{id}/answers", method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<JsonAnswer> getAnswers(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable Long id) {
+    if (id == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return null;
+    }
+    
+    Question question = questionDao.findOne(id);
+    if (question == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    
+    List<Answer> answers = question.getAnswers();
+    List<JsonAnswer> result = new ArrayList<JsonAnswer>(answers.size());
+    for (Answer ans : answers) {
+      result.add(new JsonAnswer(ans));
+    }
+    return result;
   }
 
   /**

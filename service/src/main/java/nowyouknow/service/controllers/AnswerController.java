@@ -31,7 +31,6 @@ public class AnswerController {
   @Autowired
   private AnswerDao answerDao;
 
-  @SuppressWarnings("unused")
   @Autowired
   private ReactionDao reactionDao;
 
@@ -60,6 +59,7 @@ public class AnswerController {
 
     log.info("Saving answer {}", newAnswer.text);
     Answer answer = new Answer(question, newAnswer.text);
+    reactionDao.save(answer.getReaction());
     answerDao.save(answer);
 
     response.setHeader("Location", "/answer/" + answer.getId());
