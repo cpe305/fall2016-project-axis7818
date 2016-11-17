@@ -6,7 +6,10 @@ import org.springframework.data.repository.CrudRepository;
 
 import javax.transaction.Transactional;
 
+/**
+ * Provides basic CRUD operations to Topic data.
+ */
 @Transactional
 public interface TopicDao extends CrudRepository<Topic, Long> {
-  public Topic findByName(String name); // TODO: remove this and manage topics by id
+  public Topic findByName(String name);
 }
