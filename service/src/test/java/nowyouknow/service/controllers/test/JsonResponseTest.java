@@ -3,9 +3,6 @@ package nowyouknow.service.controllers.test;
 import nowyouknow.common.data.Answer;
 import nowyouknow.common.data.Question;
 import nowyouknow.common.data.Topic;
-import nowyouknow.common.data.test.AnswerTest;
-import nowyouknow.common.data.test.QuestionTest;
-import nowyouknow.common.data.test.TopicTest;
 import nowyouknow.service.results.JsonAnswer;
 import nowyouknow.service.results.JsonQuestion;
 import nowyouknow.service.results.JsonTopic;
@@ -14,9 +11,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class JsonResponseTest {
-  private static final Topic topic = new Topic(TopicTest.tText);
-  private static final Question question = new Question(QuestionTest.qText, topic);
-  private static final Answer answer = new Answer(question, AnswerTest.aText);
+  private static final Topic topic = new Topic("Math");
+  private static final Question question = new Question("What is 2 + 2?", topic);
+  private static final Answer answer = new Answer(question, "4!");
   
   @Test
   public void testJsonTopic() {
