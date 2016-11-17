@@ -6,14 +6,14 @@ import nowyouknow.common.data.Reaction;
 import java.util.Date;
 
 public class JsonQuestion {
-  
+
   private Long id;
   private String text;
   private Boolean open;
   private Date whenAsked;
   private Long topicId;
   private Integer likes;
-  
+
   public Long getId() {
     return id;
   }
@@ -80,9 +80,9 @@ public class JsonQuestion {
 
   private Integer dislikes;
   private Integer laughs;
-  
+
   public JsonQuestion() {}
-  
+
   /**
    * Create a new JsonQuestion based on a Question object.
    */
