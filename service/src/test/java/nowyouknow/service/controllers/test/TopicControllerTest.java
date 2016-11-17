@@ -3,23 +3,17 @@ package nowyouknow.service.controllers.test;
 import nowyouknow.common.dao.TopicDao;
 import nowyouknow.service.controllers.TopicController;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import javax.servlet.http.HttpServletResponse;
 
 
 public class TopicControllerTest {
-  private static final String TOPIC_RESOURCE = "/topic";
+  // private static final String TOPIC_RESOURCE = "/topic";
 
   @Mock
   private TopicDao topicDao;
@@ -43,9 +37,9 @@ public class TopicControllerTest {
 
   @Test
   public void createTopicTest() throws Exception {
-//    RequestBuilder request = MockMvcRequestBuilders.post(TOPIC_RESOURCE + "/")
-//        .content("{\"name\": \"HHGTTG\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
-//    HttpServletResponse response = this.mockMvc.perform(request).andReturn().getResponse();
-//    Assert.assertEquals(200, response.getStatus());
+    // RequestBuilder request = MockMvcRequestBuilders.post(TOPIC_RESOURCE + "/")
+    // .content("{\"name\": \"HHGTTG\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
+    // HttpServletResponse response = this.mockMvc.perform(request).andReturn().getResponse();
+    // Assert.assertEquals(200, response.getStatus());
   }
 }

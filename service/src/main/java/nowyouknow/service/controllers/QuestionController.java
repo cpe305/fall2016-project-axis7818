@@ -46,7 +46,7 @@ public class QuestionController {
   @RequestMapping(value = "/", method = RequestMethod.POST)
   public void create(HttpServletRequest request, HttpServletResponse response,
       @RequestBody JsonQuestion newQuestion) throws IOException {
-    if (newQuestion.text == null || newQuestion.text.isEmpty()) {
+    if (newQuestion.getText() == null || newQuestion.getText().isEmpty()) {
       log.error("No text provided when creating a question.");
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       response.getWriter().print("Please provide some text for the question.");
@@ -54,19 +54,19 @@ public class QuestionController {
     }
 
     Topic topic = null;
-    if (newQuestion.topicId != null) {
-      topic = topicDao.findOne(newQuestion.topicId);
+    if (newQuestion.getTopicId() != null) {
+      topic = topicDao.findOne(newQuestion.getTopicId());
       if (topic == null) {
         log.error("Creating question for topic id {}, but there is no topic with that id!",
-            newQuestion.topicId);
+            newQuestion.getTopicId());
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         response.getWriter().print("This topic does not exist");
         return;
       }
     }
 
-    log.info("Saving new Question: {}", newQuestion.text);
-    Question question = new Question(newQuestion.text, topic);
+    log.info("Saving new Question: {}", newQuestion.getText());
+    Question question = new Question(newQuestion.getText(), topic);
     reactionDao.save(question.getReaction());
     questionDao.save(question);
 

@@ -41,7 +41,7 @@ public class AnswerController {
   public void create(HttpServletRequest request, HttpServletResponse response,
       @RequestBody JsonAnswer newAnswer) throws IOException {
     // validate the answer text
-    if (newAnswer.text == null || newAnswer.text.isEmpty()) {
+    if (newAnswer.getText() == null || newAnswer.getText().isEmpty()) {
       log.error("No text provided when creating an answer.");
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return;
@@ -49,16 +49,16 @@ public class AnswerController {
 
     // retrieve the question
     Question question = null;
-    if (newAnswer.questionId != null) {
-      question = questionDao.findOne(newAnswer.questionId);
+    if (newAnswer.getQuestionId() != null) {
+      question = questionDao.findOne(newAnswer.getQuestionId());
     }
     if (question == null) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
 
-    log.info("Saving answer {}", newAnswer.text);
-    Answer answer = new Answer(question, newAnswer.text);
+    log.info("Saving answer {}", newAnswer.getText());
+    Answer answer = new Answer(question, newAnswer.getText());
     reactionDao.save(answer.getReaction());
     answerDao.save(answer);
 

@@ -40,14 +40,14 @@ public class TopicController {
     log.info("POST /topic/create");
 
     // validate the name
-    if (newTopic.name == null) {
+    if (newTopic.getName() == null) {
       log.info("No name provided for topic.");
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
 
-    log.info("Saving new topic: %s", newTopic.name);
-    Topic topic = topicDao.save(new Topic(newTopic.name));
+    log.info("Saving new topic: %s", newTopic.getName());
+    Topic topic = topicDao.save(new Topic(newTopic.getName()));
 
     response.setHeader("Location", "/topic/" + topic.getId());
     return;
@@ -133,9 +133,9 @@ public class TopicController {
     }
 
     // name change?
-    if (newTopic.name != null && !newTopic.name.isEmpty()
-        && !topic.getName().equals(newTopic.name)) {
-      topic.setName(newTopic.name);
+    if (newTopic.getName() != null && !newTopic.getName().isEmpty()
+        && !topic.getName().equals(newTopic.getName())) {
+      topic.setName(newTopic.getName());
     }
 
     topicDao.save(topic);
