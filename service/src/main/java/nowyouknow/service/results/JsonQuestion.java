@@ -81,7 +81,9 @@ public class JsonQuestion {
   private Integer dislikes;
   private Integer laughs;
 
-  public JsonQuestion() {}
+  public JsonQuestion() {
+    // empty constructor for serialization purposes
+  }
 
   /**
    * Create a new JsonQuestion based on a Question object.

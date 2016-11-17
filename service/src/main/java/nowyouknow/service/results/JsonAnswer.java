@@ -12,7 +12,9 @@ public class JsonAnswer {
   private Integer dislikes;
   private Integer laughs;
 
-  public JsonAnswer() {}
+  public JsonAnswer() {
+    // empty constructor for serialization purposes
+  }
 
   /**
    * Uses an Answer object as a template.

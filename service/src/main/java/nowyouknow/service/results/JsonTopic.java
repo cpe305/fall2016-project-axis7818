@@ -24,7 +24,9 @@ public class JsonTopic {
 
   private String name;
   
-  public JsonTopic() {}
+  public JsonTopic() {
+    // empty constructor for serialization purposes
+  }
   
   public JsonTopic(Topic topic) {
     this.id = topic.getId();
