@@ -8,8 +8,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 public class TopicControllerTest {
@@ -21,7 +19,7 @@ public class TopicControllerTest {
   @InjectMocks
   private TopicController topicController;
 
-  private MockMvc mockMvc;
+  // private MockMvc mockMvc;
 
   /**
    * Setup the controller.
@@ -32,7 +30,7 @@ public class TopicControllerTest {
     MockitoAnnotations.initMocks(this);
 
     // Setup String test in standalone mode
-    this.mockMvc = MockMvcBuilders.standaloneSetup(topicController).build();
+    // this.mockMvc = MockMvcBuilders.standaloneSetup(topicController).build();
   }
 
   @Test

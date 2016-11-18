@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 
@@ -34,12 +33,6 @@ public class MainController {
 
   @Autowired
   private ReactionDao reactionDao;
-
-  @RequestMapping("/")
-  @ResponseBody
-  public String index() {
-    return "<h1>Now You Know Index!</h1>";
-  }
 
   /**
    * Would it save you a lot of time if I just gave up and went mad now?.
