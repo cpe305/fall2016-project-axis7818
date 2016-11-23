@@ -3,6 +3,9 @@ package nowyouknow.service.results;
 import nowyouknow.common.data.Answer;
 import nowyouknow.common.data.Reaction;
 
+/**
+ * A json/http friendly version of an answer object.
+ */
 public class JsonAnswer {
   
   private Long id;
@@ -18,6 +21,7 @@ public class JsonAnswer {
 
   /**
    * Uses an Answer object as a template.
+   * @param answer the source Answer object.
    */
   public JsonAnswer(Answer answer) {
     this.setId(answer.getId());

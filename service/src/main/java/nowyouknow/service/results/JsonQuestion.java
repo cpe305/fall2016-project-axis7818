@@ -5,6 +5,9 @@ import nowyouknow.common.data.Reaction;
 
 import java.util.Date;
 
+/**
+ * a json/http friendly version of a Question object.
+ */
 public class JsonQuestion {
 
   private Long id;
@@ -13,6 +16,30 @@ public class JsonQuestion {
   private Date whenAsked;
   private Long topicId;
   private Integer likes;
+  private Integer dislikes;
+  private Integer laughs;
+
+  public JsonQuestion() {
+    // empty constructor for serialization purposes
+  }
+
+  /**
+   * Create a new JsonQuestion based on a Question object.
+   * 
+   * @param question the Question object.
+   */
+  public JsonQuestion(Question question) {
+    this.id = question.getId();
+    this.text = question.getText();
+    this.open = question.getOpen();
+    this.whenAsked = question.getWhenAsked();
+    this.topicId = question.getTopic().getId();
+
+    Reaction reaction = question.getReaction();
+    this.likes = reaction.getLikes();
+    this.dislikes = reaction.getDislikes();
+    this.laughs = reaction.getLaughs();
+  }
 
   public Long getId() {
     return id;
@@ -76,28 +103,5 @@ public class JsonQuestion {
 
   public void setLaughs(Integer laughs) {
     this.laughs = laughs;
-  }
-
-  private Integer dislikes;
-  private Integer laughs;
-
-  public JsonQuestion() {
-    // empty constructor for serialization purposes
-  }
-
-  /**
-   * Create a new JsonQuestion based on a Question object.
-   */
-  public JsonQuestion(Question question) {
-    this.id = question.getId();
-    this.text = question.getText();
-    this.open = question.getOpen();
-    this.whenAsked = question.getWhenAsked();
-    this.topicId = question.getTopic().getId();
-
-    Reaction reaction = question.getReaction();
-    this.likes = reaction.getLikes();
-    this.dislikes = reaction.getDislikes();
-    this.laughs = reaction.getLaughs();
   }
 }

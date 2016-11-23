@@ -23,6 +23,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Provides REST API operations to Topics.
+ */
 @RestController()
 @RequestMapping("/topic")
 public class TopicController {
@@ -35,6 +38,10 @@ public class TopicController {
 
   /**
    * Create a new topic.
+   * @param request the request object.
+   * @param response the response object.
+   * @param newTopic the topic object with the new properties.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/", method = RequestMethod.POST)
   public void create(HttpServletRequest request, HttpServletResponse response,
@@ -69,6 +76,11 @@ public class TopicController {
 
   /**
    * Retrieve a Topic by id or name.
+   * @param request the request object.
+   * @param response the response object.
+   * @param identifier an identifier, can be id or name.
+   * @return a json/http friendly version of the Topic.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/{identifier}", method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -97,9 +109,12 @@ public class TopicController {
     return new JsonTopic(topic);
   }
 
-  // TODO: don't just return all of the questions
   /**
    * Get a list of questions for the topic.
+   * @param request the request object.
+   * @param response the response object.
+   * @param id the id of the topic.
+   * @return a list of questions that fall under the topic.
    */
   @RequestMapping(value = "/{id}/questions", method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -125,6 +140,12 @@ public class TopicController {
 
   /**
    * Update a topic.
+   * @param request the request object.
+   * @param response the response object.
+   * @param identifier an identifier, can be the id or name.
+   * @param newTopic the Topic object with the new properties.
+   * @return a json/http friendly version of the new Topic.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/{identifier}", method = RequestMethod.PUT)
   public JsonTopic update(HttpServletRequest request, HttpServletResponse response,
@@ -158,6 +179,10 @@ public class TopicController {
 
   /**
    * Delete a Topic by id.
+   * @param request the request object.
+   * @param response the response object.
+   * @param identifier an identifier, can be id or name.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/{identifier}", method = RequestMethod.DELETE)
   public void delete(HttpServletRequest request, HttpServletResponse response,
