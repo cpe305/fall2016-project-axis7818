@@ -20,6 +20,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Provides the REST API for Answers.
+ */
 @RestController()
 @RequestMapping("/answer")
 public class AnswerController {
@@ -35,7 +38,11 @@ public class AnswerController {
   private ReactionDao reactionDao;
 
   /**
-   * Create a new answer for a specific question.
+   * Create a new Answer.
+   * @param request the request object.
+   * @param response the response object.
+   * @param newAnswer a shallow http friendly version of the answer.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/", method = RequestMethod.POST)
   public void create(HttpServletRequest request, HttpServletResponse response,

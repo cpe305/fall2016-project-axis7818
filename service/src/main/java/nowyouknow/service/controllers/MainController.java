@@ -18,6 +18,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Provides basic/universal operations in the REST API.
+ */
 @Controller
 public class MainController {
   private static final Logger log = LoggerFactory.getLogger(MainController.class);
@@ -36,6 +39,9 @@ public class MainController {
 
   /**
    * Would it save you a lot of time if I just gave up and went mad now?.
+   * @param request the request object.
+   * @param response the response object.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/end/of/the/universe", method = RequestMethod.DELETE,
       produces = MediaType.TEXT_PLAIN_VALUE)

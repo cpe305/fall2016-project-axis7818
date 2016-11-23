@@ -107,13 +107,13 @@ public class TopicController {
       @PathVariable Long id) {
     if (id == null) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      return null;
+      return new ArrayList<JsonQuestion>();
     }
     
     Topic topic = topicDao.findOne(id);
     if (topic == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-      return null;
+      return new ArrayList<JsonQuestion>();
     }
     
     List<JsonQuestion> result = new ArrayList<JsonQuestion>();

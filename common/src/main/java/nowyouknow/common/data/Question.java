@@ -15,6 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * The Entity class that represents a Question.
+ */
 @Entity
 @Table(name = "question")
 public class Question {
@@ -29,12 +32,18 @@ public class Question {
 
   protected Question() {}
 
+  /**
+   * Create a new Question.
+   * @param text the text for the question.
+   */
   public Question(String text) {
     this(text, null);
   }
 
   /**
    * Create a new Question.
+   * @param text the text for the question.
+   * @param topic the topic that the question belongs to.
    */
   public Question(String text, Topic topic) {
     this.text = text;
@@ -111,6 +120,9 @@ public class Question {
 
   /* END GETTERS AND SETTERS */
 
+  /**
+   * Close the question to answers.
+   */
   public void close() {
     this.open = false;
   }

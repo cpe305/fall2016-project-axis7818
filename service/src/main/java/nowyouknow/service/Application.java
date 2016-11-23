@@ -10,11 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("nowyouknow.common.dao")
 public class Application {
   // http://stackoverflow.com/questions/28723425/logging-controller-requests-spring-boot
-  
-  public Application() {
-    // empty constructor
-  }
 
+  /**
+   * Start the application.
+   * @param args arguments.
+   * @throws Exception uh oh.
+   */
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Application.class, args);
   }

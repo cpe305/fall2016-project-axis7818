@@ -12,6 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * The Entity class that represents a Topic.
+ */
 @Entity
 @Table(name = "topic")
 public class Topic {
@@ -22,6 +25,10 @@ public class Topic {
 
   protected Topic() {}
 
+  /**
+   * Create a new topic with the given name.
+   * @param name the topic's name.
+   */
   public Topic(String name) {
     this.name = name;
   }

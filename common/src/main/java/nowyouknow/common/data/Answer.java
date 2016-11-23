@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * The entity object that represents and Answer.
+ */
 @Entity
 @Table(name = "answer")
 public class Answer {

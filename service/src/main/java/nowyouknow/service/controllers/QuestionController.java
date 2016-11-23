@@ -26,6 +26,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Provides REST API operations for Questions.
+ */
 @RestController()
 @RequestMapping("/question")
 public class QuestionController {
@@ -42,6 +45,10 @@ public class QuestionController {
 
   /**
    * Create a new Question.
+   * @param request the request object.
+   * @param response the response object.
+   * @param newQuestion a shallow http friendly version of the new Question.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/", method = RequestMethod.POST)
   public void create(HttpServletRequest request, HttpServletResponse response,
@@ -75,6 +82,11 @@ public class QuestionController {
 
   /**
    * Get a question by id.
+   * @param request the request object.
+   * @param response the response object.
+   * @param id the id of the Question.
+   * @return the json/http friendly version of the Question.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -96,6 +108,10 @@ public class QuestionController {
 
   /**
    * Get all answers for a question.
+   * @param request the request object.
+   * @param response the response object.
+   * @param id the id of the Question.
+   * @return a List of json/http friendly Answers for the question.
    */
   @RequestMapping(value = "/{id}/answers", method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -122,6 +138,12 @@ public class QuestionController {
 
   /**
    * Update a Question.
+   * @param request the request object.
+   * @param response the response object.
+   * @param id the id of the question to change.
+   * @param newQuestion the question object with the new properties.
+   * @return the new version of the question.
+   * @throws IOException uh oh.
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.PUT,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -134,6 +156,9 @@ public class QuestionController {
 
   /**
    * Delete a question.
+   * @param request the request object.
+   * @param response the response object.
+   * @param id the id of the question to delete.
    */
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
   public void delete(HttpServletRequest request, HttpServletResponse response,

@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+/**
+ * The entity class that represents a Reaction.
+ */
 @Entity
 @Table(name = "reaction")   
 public class Reaction {
@@ -66,14 +69,26 @@ public class Reaction {
   
   /* END GETTERS AND SETTERS */
 
+  /**
+   * Mark the Reaction with a 'like'.
+   * @return the total number of likes.
+   */
   public Integer like() {
     return ++this.likes;
   }
 
+  /**
+   * Mark the Reaction with a 'dislike'.
+   * @return the total number of dislikes.
+   */
   public Integer dislike() {
     return ++this.dislikes;
   }
 
+  /**
+   * Mark the Reaction with a 'laugh'.
+   * @return the total number of laughs.
+   */
   public Integer laugh() {
     return ++this.laughs;
   }
