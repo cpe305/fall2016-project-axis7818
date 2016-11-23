@@ -11,7 +11,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class Application {
   // http://stackoverflow.com/questions/28723425/logging-controller-requests-spring-boot
   
-  public Application() {}
+  public Application() {
+    // empty constructor
+  }
 
   public static void main(String[] args) throws Exception {
     SpringApplication.run(Application.class, args);

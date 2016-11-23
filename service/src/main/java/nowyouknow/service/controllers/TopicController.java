@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/topic")
 public class TopicController {
   private static final Logger log = LoggerFactory.getLogger(TopicController.class);
+  
+  private static final int MAX_NAME_LENGTH = 256;
 
   @Autowired
   private TopicDao topicDao;
@@ -45,7 +47,19 @@ public class TopicController {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
+    if (newTopic.getName().length() > MAX_NAME_LENGTH) {
+      log.info("topic name too long...");
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return;
+    }
+    Topic duplicate = topicDao.findByName(newTopic.getName());
+    if (duplicate != null) {
+      log.info("topic already exists with this name.");
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return;
+    }
 
+    // save the new topic
     log.info("Saving new topic: %s", newTopic.getName());
     Topic topic = topicDao.save(new Topic(newTopic.getName()));
 

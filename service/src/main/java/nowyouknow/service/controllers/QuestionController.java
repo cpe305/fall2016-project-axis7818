@@ -103,13 +103,13 @@ public class QuestionController {
       @PathVariable Long id) {
     if (id == null) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-      return null;
+      return new ArrayList<JsonAnswer>();
     }
     
     Question question = questionDao.findOne(id);
     if (question == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-      return null;
+      return new ArrayList<JsonAnswer>();
     }
     
     List<Answer> answers = question.getAnswers();

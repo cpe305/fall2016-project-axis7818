@@ -1,43 +1,33 @@
 package nowyouknow.service.controllers.test;
 
-import nowyouknow.common.dao.TopicDao;
-import nowyouknow.service.controllers.TopicController;
-
-import org.junit.Before;
+import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.test.web.servlet.RequestBuilder;
+
+import javax.servlet.http.HttpServletResponse;
 
 
-public class TopicControllerTest {
-  // private static final String TOPIC_RESOURCE = "/topic";
+public class TopicControllerTest extends NykTopicTester {
 
-  @Mock
-  private TopicDao topicDao;
+  @Test
+  public void createTopicNoNameTest() throws Exception {
+    RequestBuilder request = postTopic("{}");
+    HttpServletResponse response = getResponse(request);
 
-  @InjectMocks
-  private TopicController topicController;
-
-  // private MockMvc mockMvc;
-
-  /**
-   * Setup the controller.
-   */
-  @Before
-  public void setup() {
-    // Process mock annotations
-    MockitoAnnotations.initMocks(this);
-
-    // Setup String test in standalone mode
-    // this.mockMvc = MockMvcBuilders.standaloneSetup(topicController).build();
+    Assert.assertEquals(400, response.getStatus());
   }
 
   @Test
-  public void createTopicTest() throws Exception {
-    // RequestBuilder request = MockMvcRequestBuilders.post(TOPIC_RESOURCE + "/")
-    // .content("{\"name\": \"HHGTTG\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
-    // HttpServletResponse response = this.mockMvc.perform(request).andReturn().getResponse();
+  public void createTopicDuplicateNameTest() throws Exception {
+    // String body = "{\"name\": \"SAME_NAME\"}";
+    // RequestBuilder request = postTopic(body);
+    //
+    // // make the first topic
+    // HttpServletResponse response = getResponse(request);
     // Assert.assertEquals(200, response.getStatus());
+    //
+    // // make again with same name
+    // response = getResponse(request);
+    // Assert.assertEquals(400, response.getStatus());
   }
 }
