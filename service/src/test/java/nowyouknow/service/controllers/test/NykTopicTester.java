@@ -1,9 +1,12 @@
 package nowyouknow.service.controllers.test;
 
+import nowyouknow.common.dao.TopicDao;
+import nowyouknow.common.data.Topic;
 import nowyouknow.service.controllers.TopicController;
 
 import org.junit.Before;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,7 +17,21 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import javax.servlet.http.HttpServletResponse;
 
 public class NykTopicTester {
-  private static final String TOPIC_RESOURCE = "/topic";
+  protected static final String TOPIC_RESOURCE = "/topic";
+  protected static final String TOPIC_NAME = "TestTopic";
+  protected static final Long TOPIC_ID = 42L;
+  protected static final Topic TOPIC;
+  protected static final String TOPIC_JSON;
+
+  static {
+    TOPIC = new Topic(TOPIC_NAME);
+    TOPIC.setId(TOPIC_ID);
+
+    TOPIC_JSON = "{\"name\": \"" + TOPIC_NAME + "\", \"id\": \"" + TOPIC_ID + "\"}";
+  }
+
+  @Mock
+  protected TopicDao topicDao;
 
   @InjectMocks
   private TopicController topicController;

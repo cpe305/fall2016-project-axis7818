@@ -27,6 +27,7 @@ public class Topic {
 
   /**
    * Create a new topic with the given name.
+   * 
    * @param name the topic's name.
    */
   public Topic(String name) {
@@ -68,5 +69,16 @@ public class Topic {
   @Override
   public String toString() {
     return String.format("<Topic: id=%d>", this.id);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Topic)) {
+      return false;
+    }
+    Topic otherTopic = (Topic) other;
+
+    boolean sameId = id == null ? otherTopic.getId() == null : id.equals(otherTopic.getId());
+    return sameId && name.equals(otherTopic.getName());
   }
 }
