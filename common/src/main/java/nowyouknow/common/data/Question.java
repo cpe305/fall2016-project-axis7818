@@ -2,6 +2,7 @@ package nowyouknow.common.data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -34,6 +35,7 @@ public class Question {
 
   /**
    * Create a new Question.
+   * 
    * @param text the text for the question.
    */
   public Question(String text) {
@@ -42,6 +44,7 @@ public class Question {
 
   /**
    * Create a new Question.
+   * 
    * @param text the text for the question.
    * @param topic the topic that the question belongs to.
    */
@@ -108,12 +111,12 @@ public class Question {
   public void setReaction(Reaction reaction) {
     this.reaction = reaction;
   }
-  
+
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "question", fetch = FetchType.LAZY)
   public List<Answer> getAnswers() {
     return answers;
   }
-  
+
   public void setAnswers(List<Answer> answers) {
     this.answers = answers;
   }
@@ -130,5 +133,21 @@ public class Question {
   @Override
   public String toString() {
     return String.format("<Question: id=%d>", this.id);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Question)) {
+      return false;
+    }
+
+    Question otherQ = (Question) other;
+    boolean sameId = id == null ? otherQ.getId() == null : id.equals(otherQ.getId());
+    return sameId && text.equals(otherQ.getText());
+  }
+  
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, text);
   }
 }

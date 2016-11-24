@@ -1,6 +1,7 @@
 package nowyouknow.common.data;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -80,5 +81,10 @@ public class Topic {
 
     boolean sameId = id == null ? otherTopic.getId() == null : id.equals(otherTopic.getId());
     return sameId && name.equals(otherTopic.getName());
+  }
+  
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, id);
   }
 }

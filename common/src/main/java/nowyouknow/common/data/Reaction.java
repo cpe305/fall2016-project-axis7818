@@ -1,5 +1,7 @@
 package nowyouknow.common.data;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +13,9 @@ import javax.validation.constraints.NotNull;
  * The entity class that represents a Reaction.
  */
 @Entity
-@Table(name = "reaction")   
+@Table(name = "reaction")
 public class Reaction {
-  
+
   private Long id;
   private Integer likes;
   private Integer dislikes;
@@ -27,9 +29,9 @@ public class Reaction {
     this.dislikes = 0;
     this.laughs = 0;
   }
-  
+
   /* GETTERS AND SETTERS */
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
@@ -66,11 +68,12 @@ public class Reaction {
   public void setLaughs(Integer laughs) {
     this.laughs = laughs;
   }
-  
+
   /* END GETTERS AND SETTERS */
 
   /**
    * Mark the Reaction with a 'like'.
+   * 
    * @return the total number of likes.
    */
   public Integer like() {
@@ -79,6 +82,7 @@ public class Reaction {
 
   /**
    * Mark the Reaction with a 'dislike'.
+   * 
    * @return the total number of dislikes.
    */
   public Integer dislike() {
@@ -87,6 +91,7 @@ public class Reaction {
 
   /**
    * Mark the Reaction with a 'laugh'.
+   * 
    * @return the total number of laughs.
    */
   public Integer laugh() {
@@ -96,5 +101,22 @@ public class Reaction {
   @Override
   public String toString() {
     return String.format("<Reaction: id=%d>", this.id);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Reaction)) {
+      return false;
+    }
+
+    Reaction otherR = (Reaction) other;
+    boolean sameId = id == null ? otherR.getId() == null : id.equals(otherR.getId());
+    return sameId && likes.equals(otherR.getLikes()) && dislikes.equals(otherR.getDislikes())
+        && laughs.equals(otherR.getLaughs());
+  }
+  
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, likes, dislikes, laughs);
   }
 }

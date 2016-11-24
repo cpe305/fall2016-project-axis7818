@@ -1,6 +1,7 @@
 package nowyouknow.common.data;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -93,5 +94,21 @@ public class Answer {
   @Override
   public String toString() {
     return String.format("<Answer id=%d>", this.id);
+  }
+  
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Answer)) {
+      return false;
+    }
+    
+    Answer otherA = (Answer) other;
+    boolean sameId = id == null ? otherA.getId() == null : id.equals(otherA.getId());
+    return sameId && text.equals(otherA.getText());
+  }
+  
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, text);
   }
 }
