@@ -48,7 +48,6 @@ public class MainController {
   public void nuke(HttpServletRequest request, HttpServletResponse response) throws IOException {
     log.info("Don't Panic");
 
-    // TODO: check for environment
     topicDao.deleteAll();
     questionDao.deleteAll();
     answerDao.deleteAll();
