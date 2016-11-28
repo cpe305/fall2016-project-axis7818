@@ -10,7 +10,7 @@ Cameron Taylor
 
 # Data Entities
 
-These objects are the main entities that are stored in the database. They exist in the `nowyouknow.common.data` package and represent database rows. Interactions with the database are done with the `nowyouknow.common.dao` package with CrudRepository interfaces.
+These objects are the main entities that are stored in the database. They exist in the `nowyouknow.common.data` package and represent database rows. Interactions with the database are done with the `nowyouknow.common.dao` package with CrudRepository interfaces. All Dao objects extend  Spring's [CrudRepository](http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html). Only additional methods are documented here.
 
 ## Topic
 
@@ -23,6 +23,13 @@ These objects are the main entities that are stored in the database. They exist 
 
    <dt>questions: List<Question></dt>
    <dd>A list of all questions under this topic.</dd>
+</dl>
+
+### TopicDao
+
+<dl>
+   <dt>findByName(name: String): Topic</dt>
+   <dd>Finds a Topic object by its name.</dd>
 </dl>
 
 ## Question
@@ -89,11 +96,11 @@ These objects are the main entities that are stored in the database. They exist 
 
 # REST Resources
 
-## /topic
+## `/topic`
 
-## /question
+## `/question`
 
-## /answer
+## `/answer`
 
 ---
 
