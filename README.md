@@ -12,10 +12,9 @@ Cameron Taylor
 
 ## Topic
 
-### Attributes
 <dl>
    <dt>id: Long</dt>
-   <dd>a unique identifier.</dd>
+   <dd>A unique identifier.</dd>
 
    <dt>name: String</dt>
    <dd>The name of the topic.</dd>
@@ -26,9 +25,63 @@ Cameron Taylor
 
 ## Question
 
+<dl>
+   <dt>id: Long</dt>
+   <dd>A unique identifier.</dd>
+
+   <dt>text: String</dt>
+   <dd>The question itself.</dd>
+
+   <dt>open: Boolean</dt>
+   <dd>Whether or not a question is open for being answered or edited.</dd>
+
+   <dt>whenAsked: Date</dt>
+   <dd>The point in time when the question was asked.</dd>
+
+   <dt>topic: Topic</dt>
+   <dd>The topic that the question falls under. Can be null.</dd>
+
+   <dt>reaction: Reaction</dt>
+   <dd>The reaction object for this question. Cannot be null</dd>
+
+   <dt>answers: List<Answer></dt>
+   <dd>A list of all answers for this question.</dd>
+</dl>
+
 ## Answer
 
+<dl>
+   <dt>id: Long</dt>
+   <dd>A unique identifier</dd>
+
+   <dt>text: String</dt>
+   <dd>The actual answer.</dd>
+
+   <dt>whenAnswered: Date</dt>
+   <dd>The point in time when the answer was made.</dd>
+
+   <dt>question: Question</dt>
+   <dd>The question that this Answer answers. Cannot be null.</dd>
+
+   <dt>reaction: Reaction</dt>
+   <dd>The reaction object for this Answer. Cannot be null</dd>
+</dl>
+
 ## Reaction
+
+<dl>
+   <dt>id: Long</dt>
+   <dd>A unique identifier.</dd>
+
+   <dt>likes: Integer</dt>
+   <dd>The number of times this object was 'liked'.</dd>
+
+   <dt>dislikes: Integer</dt>
+   <dd>The number of times this object was 'disliked'.</dd>
+
+   <dt>laughs: Integer</dt>
+   <dd>The number of times this object was 'laughed'.</dd>
+</dl>
 
 ---
 
