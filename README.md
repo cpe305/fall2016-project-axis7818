@@ -10,6 +10,8 @@ Cameron Taylor
 
 # Data Entities
 
+These objects are the main entities that are stored in the database. They exist in the `nowyouknow.common.data` package and represent database rows. Interactions with the database are done with the `nowyouknow.common.dao` package with CrudRepository interfaces.
+
 ## Topic
 
 <dl>
