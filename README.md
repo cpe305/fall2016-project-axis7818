@@ -98,9 +98,37 @@ These objects are the main entities that are stored in the database. They exist 
 
 ## `/topic`
 
+Requests to this URI are handled by TopicController.
+
+### `POST /topic/`
+
+### `GET /topic/{identifier}`
+
+### `GET /topic/{identifier}/questions`
+
+### `PUT /topic/{identifier}`
+
+### `DELETE /topic/{identifier}`
+
 ## `/question`
 
+Requests to this URI are handled by QuestionController.
+
+### `POST /question/`
+
+### `GET /question/{id}`
+
+### `GET /question/{id}/answers`
+
+### `PUT /question/{id}`
+
+### `DELETE /question/{id}`
+
 ## `/answer`
+
+Requests to this URI are handled by AnswerController.
+
+### `POST /answer/`
 
 ---
 
