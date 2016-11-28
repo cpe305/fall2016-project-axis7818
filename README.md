@@ -12,7 +12,7 @@ Cameron Taylor
 
 These objects are the main entities that are stored in the database. They exist in the `nowyouknow.common.data` package and represent database rows. Interactions with the database are done with the `nowyouknow.common.dao` package with CrudRepository interfaces. All Dao objects extend  Spring's [CrudRepository](http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html). Only additional methods are documented here.
 
-## Topic
+## [Topic](https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Topic.java)
 
 <dl>
    <dt>id: Long</dt>
@@ -25,14 +25,14 @@ These objects are the main entities that are stored in the database. They exist 
    <dd>A list of all questions under this topic.</dd>
 </dl>
 
-### TopicDao
+### [TopicDao](https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/dao/TopicDao.java)
 
 <dl>
    <dt>findByName(name: String): Topic</dt>
    <dd>Finds a Topic object by its name.</dd>
 </dl>
 
-## Question
+## [Question](https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Question.java)
 
 <dl>
    <dt>id: Long</dt>
@@ -57,7 +57,7 @@ These objects are the main entities that are stored in the database. They exist 
    <dd>A list of all answers for this question.</dd>
 </dl>
 
-## Answer
+## [Answer](https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Answer.java)
 
 <dl>
    <dt>id: Long</dt>
@@ -76,7 +76,7 @@ These objects are the main entities that are stored in the database. They exist 
    <dd>The reaction object for this Answer. Cannot be null</dd>
 </dl>
 
-## Reaction
+## [Reaction](https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Reaction.java)
 
 <dl>
    <dt>id: Long</dt>
@@ -96,9 +96,45 @@ These objects are the main entities that are stored in the database. They exist 
 
 # REST Resources
 
+Topic, Question, and Answer objects each have a corresponding class in `nowyouknow.service.results` that represents a flattened version of the object. These are the entities that are converted to/from json request bodies.
+
+[JsonTopic](https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/results/JsonTopic.java)
+```
+{
+   "id": 1,
+   "name": "Hitchhiker's Guide To The Galaxy"
+}
+```
+
+[JsonQuestion](https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/results/JsonQuestion.java)
+```
+{
+   "id": 1,
+   "text": "What is the answer to life, the universe, and everything?",
+   "open": true,
+   "whenAsked": 57392084732,
+   "topicId": 1,
+   "likes": 894,
+   "dislikes": 32,
+   "laughs": 123
+}
+```
+
+[JsonAnswer](https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/results/JsonAnswer.java)
+```
+{
+   "id": 1,
+   "text": "42",
+   "questionId": 1,
+   "likes": 42,
+   "dislikes": 0,
+   "laughs": 3
+}
+```
+
 ## `/topic`
 
-Requests to this URI are handled by TopicController.
+Requests to this URI are handled by [TopicController](https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/controllers/TopicController.java).
 
 ### `POST /topic/`
 
@@ -112,7 +148,7 @@ Requests to this URI are handled by TopicController.
 
 ## `/question`
 
-Requests to this URI are handled by QuestionController.
+Requests to this URI are handled by [QuestionController](https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/controllers/QuestionController.java).
 
 ### `POST /question/`
 
@@ -126,16 +162,8 @@ Requests to this URI are handled by QuestionController.
 
 ## `/answer`
 
-Requests to this URI are handled by AnswerController.
+Requests to this URI are handled by [AnswerController](https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/controllers/AnswerController.java).
 
 ### `POST /answer/`
-
----
-
-# Testing
-
-## Data Entities
-
-## REST Resources
 
 ---
