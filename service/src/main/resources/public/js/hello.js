@@ -1,24 +1,26 @@
-var app = angular.module('nowyouknow', ['ngRoute']);
+var app = angular.module('nowyouknow', []);
 
-// Configure page routing
-app.config(function($routeProvider) {
-   $routeProvider
+app.controller('homeController', [
+   '$scope',
+   'nykTopic',
+   'nykQuestion',
+   'nykAnswer',
+function($scope, $topic, $question, $answer) {
 
-   .when('/', {
-      templateUrl: 'templates/home.html',
-      controller: 'homeController',
-   })
+   $topic.getAll(function(topics) {
+      topics.forEach(function(topic) {
 
-   .when('/topics', {
-      templateUrl: 'templates/topics.html',
-      controller: 'topicsController',
+         $topic.get(topic.id, function(topic) {
+            $topic.getQuestions(topic.id, function(questions) {
+               console.log("---");
+               questions.forEach(function(question) {
+                  console.log(question);
+               });
+            });
+         });
+
+         $topic.deleteOne(topic.id);
+      });
    });
-});
 
-app.controller('homeController', ['$scope', function($scope) {
-   $scope.greeting = "Greetings from HOME!";
 }]);
-
-app.controller('topicsController', ['$scope', function($scope) {
-   $scope.greeting = "Greetings from TOPIC!";
-}])

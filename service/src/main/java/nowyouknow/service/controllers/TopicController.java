@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/topic")
 public class TopicController {
   private static final Logger log = LoggerFactory.getLogger(TopicController.class);
-  
+
   private static final int MAX_NAME_LENGTH = 256;
 
   @Autowired
@@ -38,6 +39,7 @@ public class TopicController {
 
   /**
    * Create a new topic.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param newTopic the topic object with the new properties.
@@ -75,7 +77,28 @@ public class TopicController {
   }
 
   /**
+   * Retrieve a list of all Topics.
+   * 
+   * @param request the request object.
+   * @param response the response object.
+   * @return a list of all Topic Objects
+   */
+  @RequestMapping(value = "/", method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<JsonTopic> getAll(HttpServletRequest request, HttpServletResponse response) {
+    log.info("GET /topic/");
+    Iterator<Topic> topics = topicDao.findAll().iterator();
+    
+    List<JsonTopic> result = new ArrayList<JsonTopic>();
+    while (topics.hasNext()) {
+      result.add(new JsonTopic(topics.next()));
+    }
+    return result;
+  }
+
+  /**
    * Retrieve a Topic by id or name.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param identifier an identifier, can be id or name.
@@ -111,6 +134,7 @@ public class TopicController {
 
   /**
    * Get a list of questions for the topic.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param id the id of the topic.
@@ -124,13 +148,13 @@ public class TopicController {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return new ArrayList<JsonQuestion>();
     }
-    
+
     Topic topic = topicDao.findOne(id);
     if (topic == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return new ArrayList<JsonQuestion>();
     }
-    
+
     List<JsonQuestion> result = new ArrayList<JsonQuestion>();
     for (Question question : topic.getQuestions()) {
       result.add(new JsonQuestion(question));
@@ -140,6 +164,7 @@ public class TopicController {
 
   /**
    * Update a topic.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param identifier an identifier, can be the id or name.
@@ -179,6 +204,7 @@ public class TopicController {
 
   /**
    * Delete a Topic by id.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param identifier an identifier, can be id or name.
