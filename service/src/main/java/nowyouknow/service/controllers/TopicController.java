@@ -195,6 +195,14 @@ public class TopicController {
     // name change?
     if (newTopic.getName() != null && !newTopic.getName().isEmpty()
         && !topic.getName().equals(newTopic.getName())) {
+      
+      // check for existing topic
+      if (topicDao.findByName(newTopic.getName()) != null) {
+        log.info("A topic with the name " + newTopic.getName() + " already exists.");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return null;
+      }
+      
       topic.setName(newTopic.getName());
     }
 

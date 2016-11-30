@@ -140,14 +140,32 @@ Topic, Question, and Answer objects each have a corresponding class in `nowyoukn
 Requests to this URI are handled by [TopicController](https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/controllers/TopicController.java).
 
 ### `POST /topic/`
+```
+{
+   "name": "New Topic"
+}
+```
+Post a new topic. The name must be less than 257 characters and a topic of the same name cannot already exist in the database.
+
+### `GET /topic/`
+Retrieves a list of all topics.
 
 ### `GET /topic/{identifier}`
+Retrieve a single topic. The identifier can be the topic's name or id.
 
 ### `GET /topic/{identifier}/questions`
+Retrieve a list of all questions for a given topic. The identifier can be the topic's name or id.
 
 ### `PUT /topic/{identifier}`
+```
+{
+   "name": "New Name"
+}
+```
+Update a topic identified by `{identifier}` with the body parameters. A topic with the same name cannot exist in the database.
 
 ### `DELETE /topic/{identifier}`
+Delete a topic. Identifier can be the id or name.
 
 ## `/question`
 
