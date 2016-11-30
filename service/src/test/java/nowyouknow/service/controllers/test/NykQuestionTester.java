@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 public class NykQuestionTester {
   private static final Logger log = LoggerFactory.getLogger(NykQuestionTester.class);
@@ -64,10 +66,17 @@ public class NykQuestionTester {
   }
 
   protected RequestBuilder getQuestion() {
-    return getQuestion("");
+    return getQuestion("", null);
+  }
+  
+  protected RequestBuilder getQuestion(String uri) {
+    return getQuestion(uri, null);
   }
 
-  protected RequestBuilder getQuestion(String uri) {
-    return MockMvcRequestBuilders.get(QUESTION_RESOURCE + "/" + uri);
+  protected RequestBuilder getQuestion(String uri, MultiValueMap<String, String> params) {
+    if (params == null) {
+      params = new LinkedMultiValueMap<String, String>();
+    }
+    return MockMvcRequestBuilders.get(QUESTION_RESOURCE + "/" + uri).params(params);
   }
 }
