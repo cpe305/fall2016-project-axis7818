@@ -19,16 +19,45 @@ function($scope, $location, $topic) {
 app.controller("topicController", [
    '$scope',
    '$routeParams',
+   '$location',
    'nykTopic',
-function($scope, $routeParams, $topic) {
+function($scope, $routeParams, $location, $topic) {
    $scope.topic = {};
-   $scope.questions = [];
+
+   $scope.deleteTopic = function(topicId) {
+      $topic.deleteTopic(topicId);
+      $location.path("/topics");
+   };
 
    console.log("Initializing topicController");
    $topic.getTopic($routeParams.topicId).then(function(topic) {
       $scope.topic = topic;
-      $topic.getQuestions(topic.id).then(function(questions) {
-         $scope.questions = questions;
-      })
+      $scope.topic.questions = [];
+
+      if (topic != null) {
+         $topic.getQuestions(topic.id).then(function(questions) {
+            $scope.topic.questions = questions;
+         });
+      }
    });
+}]);
+
+app.directive("nykTopic", [
+   '$location',
+function($location) {
+   function handleQuestionClicked(question) {
+      $location.path("/question/" + question.id);
+   }
+
+   return {
+      restrict: 'E',
+      templateUrl: "templates/directives/topic.html",
+      scope: {
+         topic: '=',
+      },
+      link: function(scope, elem, attrs) {
+         console.log("linking nykTopic");
+         scope.questionClick = handleQuestionClicked;
+      }
+   };
 }]);

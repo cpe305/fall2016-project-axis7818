@@ -23,7 +23,24 @@ function($http, $q) {
       return def.promise;
    }
 
+   function getQuestion(questionId) {
+      var request = "/question/" + questionId;
+      var def = $q.defer();
+
+      console.log("GET " + request);
+      $http.get(request).success(function(data) {
+         console.log(data);
+         def.resolve(data);
+      }).error(function(data, status, headers, config) {
+         console.log(data);
+         def.resolve(null);
+      });
+
+      return def.promise;
+   }
+
    return {
       getRandom: getRandom,
+      getQuestion: getQuestion,
    };
 }]);

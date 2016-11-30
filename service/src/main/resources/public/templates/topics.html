@@ -3,6 +3,11 @@
       <div class="col-xs-12">
 
          <div class="topic-list">
+
+            <div class="alert alert-warning" ng-if="!topics.length">
+               <p>There are no topics!</p>
+            </div>
+
             <div class="panel panel-default panel-topic"
                ng-repeat="topic in topics"
                ng-click="topicClicked(topic.id);">
@@ -10,6 +15,7 @@
                   {{ topic.name }}
                </div>
             </div>
+
          </div>
 
       </div>

@@ -1,0 +1,15 @@
+<div>
+
+   <div ng-if="question">
+      <h2>{{ question.text }}</h2>
+
+      <div ng-repeat="answer in question.answers">
+         <p>{{ answer.text }}</p>
+      </div>
+
+   </div>
+   <div class="alert alert-danger" ng-if="!question">
+      <p>Could not find a question. Try again later!</p>
+   </div>
+
+</div>

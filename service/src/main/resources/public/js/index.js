@@ -12,6 +12,10 @@ app.config(function($routeProvider) {
       templateUrl: "templates/random.html",
       controller: "randomController",
    })
+   .when("/question/:questionId", {
+      templateUrl: "templates/question.html",
+      controller: "questionController",
+   })
    .when("/topics", {
       templateUrl: "templates/topics.html",
       controller: "topicsController",

@@ -14,3 +14,27 @@ function($scope, $question) {
    console.log("Initializing randomController");
    $scope.refresh();
 }]);
+
+app.controller("questionController", [
+   '$scope',
+   '$routeParams',
+   'nykQuestion',
+function($scope, $routeParams, $question) {
+   $scope.question = null;
+
+   $question.getQuestion($routeParams.questionId).then(function(question) {
+      $scope.question = question;
+   });
+
+   console.log("Initializing questionController");
+}]);
+
+app.directive("nykQuestion", [function() {
+   return {
+      restrict: 'E',
+      templateUrl: "templates/directives/question.html",
+      scope: {
+         question: '=',
+      },
+   };
+}]);

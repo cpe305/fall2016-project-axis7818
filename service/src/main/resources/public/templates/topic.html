@@ -2,16 +2,11 @@
    <div class="row">
       <div class="col-xs-12">
 
-         <div ng-if="topic != null">
-            <h2>{{ topic.name }}</h2>
-            <hr>
+         <nyk-topic topic="topic"></nyk-topic>
 
-            <div class="panel panel-default panel-question" ng-repeat="question in questions">
-               <div class="panel-body">
-                  {{ question.text }}
-               </div>
-            </div>
-         </div>
+         <button type="button" class="btn btn-danger" ng-click="deleteTopic(topic.id);">
+            <span class="glyphicon glyphicon-trash"></span> Delete
+         </button>
 
       </div>
    </div>

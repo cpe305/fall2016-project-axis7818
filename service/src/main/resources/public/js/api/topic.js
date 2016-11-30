@@ -7,7 +7,7 @@ function($http, $q) {
       var request = "/topic/";
       var def = $q.defer();
 
-      console.log("GET" + request);
+      console.log("GET " + request);
       $http.get(request).success(function(data) {
          console.log("Found " + data.length + " topics.");
          def.resolve(data);
@@ -23,7 +23,7 @@ function($http, $q) {
       var request = "/topic/" + identifier;
       var def = $q.defer();
 
-      console.log("GET" + request);
+      console.log("GET " + request);
       $http.get(request).success(function(data) {
          console.log(data);
          def.resolve(data);
@@ -39,7 +39,7 @@ function($http, $q) {
       var request = "/topic/" + identifier + "/questions";
       var def = $q.defer();
 
-      console.log("GET" + request);
+      console.log("GET " + request);
       $http.get(request).success(function(data) {
          console.log("Found " + data.length + " questions.");
          def.resolve(data);
@@ -51,9 +51,19 @@ function($http, $q) {
       return def.promise;
    }
 
+   function deleteTopic(identifier) {
+      var request = "/topic/" + identifier;
+
+      console.log("DELETE " + request);
+      $http.delete(request).error(function(data, status, headers, config) {
+         console.log(data);
+      });
+   }
+
    return {
       getAllTopics: getAllTopics,
       getTopic: getTopic,
       getQuestions: getQuestions,
+      deleteTopic: deleteTopic,
    };
 }]);
