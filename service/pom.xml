@@ -49,6 +49,13 @@
 	    <artifactId>mockito-all</artifactId>
 	    <version>1.9.5</version>
     	<scope>test</scope>
-	</dependency>		
+	</dependency>	
+	
+	<!-- https://mvnrepository.com/artifact/org.skyscreamer/jsonassert -->
+	<dependency>
+	    <groupId>org.skyscreamer</groupId>
+	    <artifactId>jsonassert</artifactId>
+    </dependency>
+		
   </dependencies>
 </project>

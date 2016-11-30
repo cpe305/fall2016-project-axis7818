@@ -1,15 +1,15 @@
 package nowyouknow.service.controllers.test;
 
 import nowyouknow.common.data.Topic;
+import nowyouknow.service.results.JsonTopic;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TopicControllerTest extends NykTopicTester {
 
@@ -21,18 +21,15 @@ public class TopicControllerTest extends NykTopicTester {
     Mockito.when(topicDao.save(noId)).thenReturn(withId);
 
     RequestBuilder request = postTopic(TOPIC_JSON);
-    HttpServletResponse response = getResponse(request);
-
-    Assert.assertEquals(200, response.getStatus());
-    Assert.assertEquals(TOPIC_RESOURCE + "/" + TOPIC_ID, response.getHeader("Location"));
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(
+        MockMvcResultMatchers.header().string("Location", TOPIC_RESOURCE + "/" + TOPIC_ID));
   }
 
   @Test
   public void createTopicNoNameTest() throws Exception {
     RequestBuilder request = postTopic("{}");
-    HttpServletResponse response = getResponse(request);
 
-    Assert.assertEquals(400, response.getStatus());
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
   }
 
   @Test
@@ -40,17 +37,34 @@ public class TopicControllerTest extends NykTopicTester {
     Mockito.when(topicDao.findByName(TOPIC_NAME)).thenReturn(TOPIC);
 
     RequestBuilder request = postTopic(TOPIC_JSON);
-    HttpServletResponse response = getResponse(request);
 
-    Assert.assertEquals(400, response.getStatus());
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
   }
 
-  // @Test
-  // public void getAllTopicsTest() throws Exception {
-  // RequestBuilder request = MockMvcRequestBuilders.get(TOPIC_RESOURCE + "/")
-  // .contentType(MediaType.APPLICATION_JSON_VALUE);
-  // HttpServletResponse response = getResponse(request);
-  //
-  // Assert.assertEquals(200, response.getStatus());
-  // }
+  @Test
+  public void getAllTopicsEmptyTest() throws Exception {
+    Mockito.when(topicDao.findAll()).thenReturn(new ArrayList<Topic>());
+
+    RequestBuilder request = getTopic();
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk());
+  }
+
+  @Test
+  public void getAllTopicsTest() throws Exception {
+    List<Topic> topics = new ArrayList<Topic>();
+    List<JsonTopic> jsonTopics = new ArrayList<JsonTopic>();
+    int count = 14;
+    for (int i = 0; i < count; ++i) {
+      Topic topic = new Topic("" + i);
+      topic.setId((long) i);
+      topics.add(topic);
+      jsonTopics.add(new JsonTopic(topic));
+    }
+
+    Mockito.when(topicDao.findAll()).thenReturn(topics);
+
+    RequestBuilder request = getTopic();
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().json(mapper.writeValueAsString(jsonTopics)));
+  }
 }

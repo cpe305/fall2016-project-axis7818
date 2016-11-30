@@ -1,5 +1,7 @@
 package nowyouknow.service.controllers.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import nowyouknow.common.dao.TopicDao;
 import nowyouknow.common.data.Topic;
 import nowyouknow.service.controllers.TopicController;
@@ -14,14 +16,13 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import javax.servlet.http.HttpServletResponse;
-
 public class NykTopicTester {
   protected static final String TOPIC_RESOURCE = "/topic";
   protected static final String TOPIC_NAME = "TestTopic";
   protected static final Long TOPIC_ID = 42L;
   protected static final Topic TOPIC;
   protected static final String TOPIC_JSON;
+  protected static final ObjectMapper mapper = new ObjectMapper();
 
   static {
     TOPIC = new Topic(TOPIC_NAME);
@@ -36,7 +37,7 @@ public class NykTopicTester {
   @InjectMocks
   private TopicController topicController;
 
-  private MockMvc mockMvc;
+  protected MockMvc mockMvc;
 
   /**
    * Setup the testing environment.
@@ -54,8 +55,12 @@ public class NykTopicTester {
     return MockMvcRequestBuilders.post(TOPIC_RESOURCE + "/").content(body)
         .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
-
-  protected HttpServletResponse getResponse(RequestBuilder request) throws Exception {
-    return this.mockMvc.perform(request).andReturn().getResponse();
+  
+  protected RequestBuilder getTopic() {
+    return getTopic("");
+  }
+  
+  protected RequestBuilder getTopic(String uri) {
+    return MockMvcRequestBuilders.get(TOPIC_RESOURCE + "/" + uri);
   }
 }
