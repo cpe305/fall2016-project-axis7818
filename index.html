@@ -189,21 +189,47 @@
 <a id="post-topic" class="anchor" href="#post-topic" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>POST /topic/</code>
 </h3>
 
+<pre><code>{
+   "name": "New Topic"
+}
+</code></pre>
+
+<p>Post a new topic. The name must be less than 257 characters and a topic of the same name cannot already exist in the database.</p>
+
+<h3>
+<a id="get-topic" class="anchor" href="#get-topic" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GET /topic/</code>
+</h3>
+
+<p>Retrieves a list of all topics.</p>
+
 <h3>
 <a id="get-topicidentifier" class="anchor" href="#get-topicidentifier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GET /topic/{identifier}</code>
 </h3>
+
+<p>Retrieve a single topic. The identifier can be the topic's name or id.</p>
 
 <h3>
 <a id="get-topicidentifierquestions" class="anchor" href="#get-topicidentifierquestions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GET /topic/{identifier}/questions</code>
 </h3>
 
+<p>Retrieve a list of all questions for a given topic. The identifier can be the topic's name or id.</p>
+
 <h3>
 <a id="put-topicidentifier" class="anchor" href="#put-topicidentifier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>PUT /topic/{identifier}</code>
 </h3>
 
+<pre><code>{
+   "name": "New Name"
+}
+</code></pre>
+
+<p>Update a topic identified by <code>{identifier}</code> with the body parameters. A topic with the same name cannot exist in the database.</p>
+
 <h3>
 <a id="delete-topicidentifier" class="anchor" href="#delete-topicidentifier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>DELETE /topic/{identifier}</code>
 </h3>
+
+<p>Delete a topic. Identifier can be the id or name.</p>
 
 <h2>
 <a id="question-1" class="anchor" href="#question-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>/question</code>
