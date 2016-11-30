@@ -2,6 +2,7 @@ package nowyouknow.service.results;
 
 import nowyouknow.common.data.Question;
 import nowyouknow.common.data.Reaction;
+import nowyouknow.common.data.Topic;
 
 import java.util.Date;
 
@@ -33,7 +34,9 @@ public class JsonQuestion {
     this.text = question.getText();
     this.open = question.getOpen();
     this.whenAsked = question.getWhenAsked();
-    this.topicId = question.getTopic().getId();
+    
+    Topic topic = question.getTopic();
+    this.topicId = topic == null ? null : topic.getId();
 
     Reaction reaction = question.getReaction();
     this.likes = reaction.getLikes();

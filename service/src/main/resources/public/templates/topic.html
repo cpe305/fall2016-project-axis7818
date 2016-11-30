@@ -1,0 +1,18 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-xs-12">
+
+         <div ng-if="topic != null">
+            <h2>{{ topic.name }}</h2>
+            <hr>
+
+            <div class="panel panel-default panel-question" ng-repeat="question in questions">
+               <div class="panel-body">
+                  {{ question.text }}
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+</div>

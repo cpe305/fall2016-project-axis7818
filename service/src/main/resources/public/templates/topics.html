@@ -1,0 +1,17 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-xs-12">
+
+         <div class="topic-list">
+            <div class="panel panel-default panel-topic"
+               ng-repeat="topic in topics"
+               ng-click="topicClicked(topic.id);">
+               <div class="panel-body">
+                  {{ topic.name }}
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+</div>

@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/question")
 public class QuestionController {
   private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
+  private static final Random random = new Random(System.currentTimeMillis());
 
   @Autowired
   private ReactionDao reactionDao;
@@ -45,6 +48,7 @@ public class QuestionController {
 
   /**
    * Create a new Question.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param newQuestion a shallow http friendly version of the new Question.
@@ -82,6 +86,7 @@ public class QuestionController {
 
   /**
    * Get a question by id.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param id the id of the Question.
@@ -107,7 +112,44 @@ public class QuestionController {
   }
 
   /**
+   * Get a random question in the database.
+   * 
+   * @param request the request object.
+   * @param response the response object.
+   * @return a json/http friendly version of the question.
+   */
+  @RequestMapping(value = "/random", method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public JsonQuestion getRandom(HttpServletRequest request, HttpServletResponse response) {
+    Long excludeId = null;
+    try {
+      excludeId = Long.parseLong(request.getParameter("excludeId"));      
+    } catch (NumberFormatException nfe) {
+      log.info("Could not determine excludeId.");
+    }
+    
+    Iterator<Question> questionIter = questionDao.findAll().iterator();
+    
+    List<Question> questions = new ArrayList<Question>();
+    while (questionIter.hasNext()) {
+      Question nextQ = questionIter.next();
+      if (!nextQ.getId().equals(excludeId)) {
+        questions.add(nextQ);        
+      }
+    }
+    
+    if (questions.size() < 1) {
+      response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
+      return null;
+    }
+    
+    int index = random.nextInt(questions.size());
+    return new JsonQuestion(questions.get(index));
+  }
+
+  /**
    * Get all answers for a question.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param id the id of the Question.
@@ -121,13 +163,13 @@ public class QuestionController {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return new ArrayList<JsonAnswer>();
     }
-    
+
     Question question = questionDao.findOne(id);
     if (question == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return new ArrayList<JsonAnswer>();
     }
-    
+
     List<Answer> answers = question.getAnswers();
     List<JsonAnswer> result = new ArrayList<JsonAnswer>(answers.size());
     for (Answer ans : answers) {
@@ -138,6 +180,7 @@ public class QuestionController {
 
   /**
    * Update a Question.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param id the id of the question to change.
@@ -156,6 +199,7 @@ public class QuestionController {
 
   /**
    * Delete a question.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param id the id of the question to delete.
