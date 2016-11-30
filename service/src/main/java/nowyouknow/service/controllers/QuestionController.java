@@ -138,7 +138,7 @@ public class QuestionController {
       }
     }
     
-    if (questions.size() < 1) {
+    if (questions.isEmpty()) {
       response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
       return null;
     }
