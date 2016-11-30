@@ -45,12 +45,12 @@ public class TopicControllerTest extends NykTopicTester {
     Assert.assertEquals(400, response.getStatus());
   }
 
-  @Test
-  public void getAllTopicsTest() throws Exception {
-    RequestBuilder request = MockMvcRequestBuilders.get(TOPIC_RESOURCE + "/")
-        .contentType(MediaType.APPLICATION_JSON_VALUE);
-    HttpServletResponse response = getResponse(request);
-    
-    Assert.assertEquals(200, response.getStatus());
-  }
+  // @Test
+  // public void getAllTopicsTest() throws Exception {
+  // RequestBuilder request = MockMvcRequestBuilders.get(TOPIC_RESOURCE + "/")
+  // .contentType(MediaType.APPLICATION_JSON_VALUE);
+  // HttpServletResponse response = getResponse(request);
+  //
+  // Assert.assertEquals(200, response.getStatus());
+  // }
 }
