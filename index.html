@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Fall2016-project-axis7818 by cpe305</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Fall2016-project-axis7818</h1>
+        <p>fall2016-project-axis7818 created by GitHub Classroom</p>
+        <p class="view"><a href="https://github.com/cpe305/fall2016-project-axis7818">View the Project on GitHub <small>cpe305/fall2016-project-axis7818</small></a></p>
+        <ul>
+          <li><a href="https://github.com/cpe305/fall2016-project-axis7818/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/cpe305/fall2016-project-axis7818/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/cpe305/fall2016-project-axis7818">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="nowyouknow" class="anchor" href="#nowyouknow" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NowYouKnow</h1>
+
+<p><a href="https://travis-ci.org/cpe305/fall2016-project-axis7818"><img src="https://travis-ci.org/cpe305/fall2016-project-axis7818.svg?branch=master" alt="Build Status"></a></p>
+
+<p>A simple web app and API for asking and answering simple/stupid questions.</p>
+
+<p>Cameron Taylor</p>
+
+<hr>
+
+<h1>
+<a id="data-entities" class="anchor" href="#data-entities" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Data Entities</h1>
+
+<p>These objects are the main entities that are stored in the database. They exist in the <code>nowyouknow.common.data</code> package and represent database rows. Interactions with the database are done with the <code>nowyouknow.common.dao</code> package with CrudRepository interfaces. All Dao objects extend  Spring's <a href="http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html">CrudRepository</a>. Only additional methods are documented here.</p>
+
+<h2>
+<a id="topic" class="anchor" href="#topic" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Topic.java">Topic</a>
+</h2>
+
+<dl>
+   <dt>id: Long</dt>
+   <dd>A unique identifier.</dd>
+
+   <dt>name: String</dt>
+   <dd>The name of the topic.</dd>
+
+   <dt>questions: List</dt>
+   <dd>A list of all questions under this topic.</dd>
+</dl>
+
+<h3>
+<a id="topicdao" class="anchor" href="#topicdao" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/dao/TopicDao.java">TopicDao</a>
+</h3>
+
+<dl>
+   <dt>findByName(name: String): Topic</dt>
+   <dd>Finds a Topic object by its name.</dd>
+</dl>
+
+<h2>
+<a id="question" class="anchor" href="#question" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Question.java">Question</a>
+</h2>
+
+<dl>
+   <dt>id: Long</dt>
+   <dd>A unique identifier.</dd>
+
+   <dt>text: String</dt>
+   <dd>The question itself.</dd>
+
+   <dt>open: Boolean</dt>
+   <dd>Whether or not a question is open for being answered or edited.</dd>
+
+   <dt>whenAsked: Date</dt>
+   <dd>The point in time when the question was asked.</dd>
+
+   <dt>topic: Topic</dt>
+   <dd>The topic that the question falls under. Can be null.</dd>
+
+   <dt>reaction: Reaction</dt>
+   <dd>The reaction object for this question. Cannot be null</dd>
+
+   <dt>answers: List</dt>
+   <dd>A list of all answers for this question.</dd>
+</dl>
+
+<h2>
+<a id="answer" class="anchor" href="#answer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Answer.java">Answer</a>
+</h2>
+
+<dl>
+   <dt>id: Long</dt>
+   <dd>A unique identifier</dd>
+
+   <dt>text: String</dt>
+   <dd>The actual answer.</dd>
+
+   <dt>whenAnswered: Date</dt>
+   <dd>The point in time when the answer was made.</dd>
+
+   <dt>question: Question</dt>
+   <dd>The question that this Answer answers. Cannot be null.</dd>
+
+   <dt>reaction: Reaction</dt>
+   <dd>The reaction object for this Answer. Cannot be null</dd>
+</dl>
+
+<h2>
+<a id="reaction" class="anchor" href="#reaction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Reaction.java">Reaction</a>
+</h2>
+
+<dl>
+   <dt>id: Long</dt>
+   <dd>A unique identifier.</dd>
+
+   <dt>likes: Integer</dt>
+   <dd>The number of times this object was 'liked'.</dd>
+
+   <dt>dislikes: Integer</dt>
+   <dd>The number of times this object was 'disliked'.</dd>
+
+   <dt>laughs: Integer</dt>
+   <dd>The number of times this object was 'laughed'.</dd>
+</dl>
+
+<hr>
+
+<h1>
+<a id="rest-resources" class="anchor" href="#rest-resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>REST Resources</h1>
+
+<p>Topic, Question, and Answer objects each have a corresponding class in <code>nowyouknow.service.results</code> that represents a flattened version of the object. These are the entities that are converted to/from json request bodies.</p>
+
+<p><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/results/JsonTopic.java">JsonTopic</a></p>
+
+<pre><code>{
+   "id": 1,
+   "name": "Hitchhiker's Guide To The Galaxy"
+}
+</code></pre>
+
+<p><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/results/JsonQuestion.java">JsonQuestion</a></p>
+
+<pre><code>{
+   "id": 1,
+   "text": "What is the answer to life, the universe, and everything?",
+   "open": true,
+   "whenAsked": 57392084732,
+   "topicId": 1,
+   "likes": 894,
+   "dislikes": 32,
+   "laughs": 123
+}
+</code></pre>
+
+<p><a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/results/JsonAnswer.java">JsonAnswer</a></p>
+
+<pre><code>{
+   "id": 1,
+   "text": "42",
+   "questionId": 1,
+   "likes": 42,
+   "dislikes": 0,
+   "laughs": 3
+}
+</code></pre>
+
+<h2>
+<a id="topic-1" class="anchor" href="#topic-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>/topic</code>
+</h2>
+
+<p>Requests to this URI are handled by <a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/controllers/TopicController.java">TopicController</a>.</p>
+
+<h3>
+<a id="post-topic" class="anchor" href="#post-topic" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>POST /topic/</code>
+</h3>
+
+<h3>
+<a id="get-topicidentifier" class="anchor" href="#get-topicidentifier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GET /topic/{identifier}</code>
+</h3>
+
+<h3>
+<a id="get-topicidentifierquestions" class="anchor" href="#get-topicidentifierquestions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GET /topic/{identifier}/questions</code>
+</h3>
+
+<h3>
+<a id="put-topicidentifier" class="anchor" href="#put-topicidentifier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>PUT /topic/{identifier}</code>
+</h3>
+
+<h3>
+<a id="delete-topicidentifier" class="anchor" href="#delete-topicidentifier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>DELETE /topic/{identifier}</code>
+</h3>
+
+<h2>
+<a id="question-1" class="anchor" href="#question-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>/question</code>
+</h2>
+
+<p>Requests to this URI are handled by <a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/controllers/QuestionController.java">QuestionController</a>.</p>
+
+<h3>
+<a id="post-question" class="anchor" href="#post-question" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>POST /question/</code>
+</h3>
+
+<h3>
+<a id="get-questionid" class="anchor" href="#get-questionid" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GET /question/{id}</code>
+</h3>
+
+<h3>
+<a id="get-questionidanswers" class="anchor" href="#get-questionidanswers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>GET /question/{id}/answers</code>
+</h3>
+
+<h3>
+<a id="put-questionid" class="anchor" href="#put-questionid" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>PUT /question/{id}</code>
+</h3>
+
+<h3>
+<a id="delete-questionid" class="anchor" href="#delete-questionid" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>DELETE /question/{id}</code>
+</h3>
+
+<h2>
+<a id="answer-1" class="anchor" href="#answer-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>/answer</code>
+</h2>
+
+<p>Requests to this URI are handled by <a href="https://github.com/cpe305/fall2016-project-axis7818/blob/master/service/src/main/java/nowyouknow/service/controllers/AnswerController.java">AnswerController</a>.</p>
+
+<h3>
+<a id="post-answer" class="anchor" href="#post-answer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>POST /answer/</code>
+</h3>
+
+<hr>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/cpe305">cpe305</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
