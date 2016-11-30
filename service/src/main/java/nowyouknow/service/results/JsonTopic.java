@@ -9,6 +9,7 @@ public class JsonTopic {
 
   private Long id;
   private String name;
+  private String description;
 
   public JsonTopic() {
     // empty constructor for serialization purposes
@@ -21,6 +22,7 @@ public class JsonTopic {
   public JsonTopic(Topic topic) {
     this.id = topic.getId();
     this.name = topic.getName();
+    this.description = topic.getDescription();
   }
 
   public Long getId() {
@@ -39,4 +41,11 @@ public class JsonTopic {
     this.name = name;
   }
 
+  public String getDescription() {
+    return description;
+  }
+  
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

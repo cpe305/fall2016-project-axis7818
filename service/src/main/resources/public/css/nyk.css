@@ -1,13 +1,13 @@
+.bottom-space {
+   margin-bottom: 1em;
+}
+
 .panel-topic:hover {
    background-color: #90ffd0;
 }
 
 .panel-question:hover {
    background-color: #90ffd0;
-}
-
-.nav-nyk {
-   margin-bottom: 1em;
 }
 
 .nav-nyk li a:hover {

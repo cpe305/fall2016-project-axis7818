@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class Topic {
 
   private Long id;
   private String name;
+  private String description;
   private List<Question> questions;
 
   protected Topic() {}
@@ -33,6 +35,17 @@ public class Topic {
    */
   public Topic(String name) {
     this.name = name;
+  }
+
+  /**
+   * Create a new topic with the given parameters.
+   * 
+   * @param name the topic's name.
+   * @param description a short description of the topic.
+   */
+  public Topic(String name, String description) {
+    this.name = name;
+    this.description = description;
   }
 
   /* GETTERS AND SETTERS */
@@ -54,6 +67,15 @@ public class Topic {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Column(length = 1024)
+  public String getDescription() {
+    return this.description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "topic", fetch = FetchType.LAZY)
@@ -82,7 +104,7 @@ public class Topic {
     boolean sameId = id == null ? otherTopic.getId() == null : id.equals(otherTopic.getId());
     return sameId && name.equals(otherTopic.getName());
   }
-  
+
   @Override
   public int hashCode() {
     return Objects.hash(name, id);

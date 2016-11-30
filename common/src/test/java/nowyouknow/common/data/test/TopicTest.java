@@ -34,6 +34,10 @@ public class TopicTest {
     topic.setName(name);
     Assert.assertEquals(topic.getName(), name);
     
+    String desc = "DESCRIPTION";
+    topic.setDescription(desc);
+    Assert.assertEquals(topic.getDescription(), desc);
+    
     List<Question> questions = null;
     topic.setQuestions(questions);
     Assert.assertEquals(topic.getQuestions(), questions);

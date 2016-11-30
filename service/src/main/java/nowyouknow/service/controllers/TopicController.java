@@ -33,6 +33,7 @@ public class TopicController {
   private static final Logger log = LoggerFactory.getLogger(TopicController.class);
 
   private static final int MAX_NAME_LENGTH = 256;
+  private static final int MAX_DESC_LENGTH = 1024;
 
   @Autowired
   private TopicDao topicDao;

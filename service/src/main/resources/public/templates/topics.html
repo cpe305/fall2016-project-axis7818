@@ -1,8 +1,13 @@
 <div class="container-fluid">
    <div class="row">
       <div class="col-xs-12">
-
          <div class="topic-list">
+
+            <div class = "bottom-space">
+               <button type="button" class="btn btn-success" ng-click="newTopicClicked();">
+                  <span class="glyphicon glyphicon-plus"></span> New Topic
+               </button>
+            </div>
 
             <div class="alert alert-warning" ng-if="!topics.length">
                <p>There are no topics!</p>
@@ -17,7 +22,6 @@
             </div>
 
          </div>
-
       </div>
    </div>
 </div>

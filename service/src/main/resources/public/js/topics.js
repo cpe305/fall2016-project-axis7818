@@ -2,13 +2,18 @@ app.controller("topicsController", [
    '$scope',
    '$location',
    'nykTopic',
-function($scope, $location, $topic) {
+   'nykDialog',
+function($scope, $location, $topic, $dialog) {
    $scope.topics = [];
 
    $scope.topicClicked = function(id) {
       console.log("Topic " + id + " clicked.");
       $location.path("/topics/" + id);
    };
+
+   $scope.newTopicClicked = function() {
+      $dialog.createTopic();
+   }
 
    console.log("Initializing topicsController");
    $topic.getAllTopics().then(function(topics) {
