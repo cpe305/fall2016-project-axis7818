@@ -13,7 +13,7 @@ Cameron Taylor
 These objects are the main entities that are stored in the database. They exist in the `nowyouknow.common.data` package and represent database rows. Interactions with the database are done with the `nowyouknow.common.dao` package with CrudRepository interfaces. All Dao objects extend  Spring's [CrudRepository](http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html). Only additional methods are documented here.
 
 ## Class Diagram
-![class diagram]()
+![class diagram](https://raw.githubusercontent.com/cpe305/fall2016-project-axis7818/master/docs/Class%20Diagram.png)
 
 ## [Topic](https://github.com/cpe305/fall2016-project-axis7818/blob/master/common/src/main/java/nowyouknow/common/data/Topic.java)
 
