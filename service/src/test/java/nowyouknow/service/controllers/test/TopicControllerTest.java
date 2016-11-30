@@ -2,6 +2,7 @@ package nowyouknow.service.controllers.test;
 
 import nowyouknow.common.data.Topic;
 import nowyouknow.service.results.JsonTopic;
+import nowyouknow.service.test.utils.TestUtils;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -38,6 +39,24 @@ public class TopicControllerTest extends NykTopicTester {
 
     RequestBuilder request = postTopic(TOPIC_JSON);
 
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
+  }
+  
+  @Test
+  public void createTopicNameTooLongTest() throws Exception {
+    String longName = TestUtils.stringOfLength(300);
+    String json = "{\"name\": \"" + longName + "\"}";
+    RequestBuilder request = postTopic(json);
+    
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
+  }
+  
+  @Test
+  public void createTopicDescriptionTooLongTest() throws Exception {
+    String longDesc = TestUtils.stringOfLength(1500);
+    String json = "{\"name\": \"name\", \"description\": \"" + longDesc + "\"}";
+    RequestBuilder request = postTopic(json);
+    
     this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
   }
 

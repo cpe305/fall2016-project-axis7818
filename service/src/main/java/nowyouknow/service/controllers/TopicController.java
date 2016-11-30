@@ -69,6 +69,13 @@ public class TopicController {
       return;
     }
 
+    // validate the description
+    if (newTopic.getDescription() != null && newTopic.getDescription().length() > MAX_DESC_LENGTH) {
+      log.info("topic description too long...");
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return;
+    }
+
     // save the new topic
     log.info("Saving new topic: %s", newTopic.getName());
     Topic topic = topicDao.save(new Topic(newTopic.getName()));
@@ -197,6 +204,13 @@ public class TopicController {
     if (newTopic.getName() != null && !newTopic.getName().isEmpty()
         && !topic.getName().equals(newTopic.getName())) {
       
+      // check length
+      if (newTopic.getName().length() > MAX_NAME_LENGTH) {
+        log.info("Topic name too long...");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return null;
+      }
+      
       // check for existing topic
       if (topicDao.findByName(newTopic.getName()) != null) {
         log.info("A topic with the name " + newTopic.getName() + " already exists.");
@@ -205,6 +219,19 @@ public class TopicController {
       }
       
       topic.setName(newTopic.getName());
+    }
+    
+    // description change?
+    if (newTopic.getDescription() != null) {
+      
+      // check length
+      if (newTopic.getDescription().length() > MAX_DESC_LENGTH) {
+        log.info("Topic description too long...");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return null;
+      }
+      
+      topic.setDescription(newTopic.getDescription());
     }
 
     topicDao.save(topic);
