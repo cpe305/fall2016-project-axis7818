@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/answer")
 public class AnswerController {
   private static final Logger log = LoggerFactory.getLogger(AnswerController.class);
-
+  
   @Autowired
   private QuestionDao questionDao;
 
@@ -94,14 +94,22 @@ public class AnswerController {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return null;
     }
-    
+
     Answer answer = answerDao.findOne(id);
     if (answer == null) {
       log.info("Could not find answer with id: " + id);
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return null;
     }
-    
+
     return new JsonAnswer(answer);
+  }
+
+  @RequestMapping(value = "/{id}", method = RequestMethod.PUT,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public JsonAnswer updateAnswer(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable Long id, @RequestBody JsonAnswer newAnswer) {
+    log.info("PUT /answer/" + id);
+    return null;
   }
 }

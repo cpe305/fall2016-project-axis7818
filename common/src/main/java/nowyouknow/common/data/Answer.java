@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "answer")
 public class Answer {
+  public static final int MAX_TEXT_LENGTH = 512;
 
   private Long id;
   private String text;
@@ -54,6 +56,7 @@ public class Answer {
   }
 
   @NotNull
+  @Column(length = MAX_TEXT_LENGTH)
   public String getText() {
     return text;
   }
