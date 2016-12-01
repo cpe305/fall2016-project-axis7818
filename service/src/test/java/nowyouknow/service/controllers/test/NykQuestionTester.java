@@ -1,14 +1,14 @@
 package nowyouknow.service.controllers.test;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import nowyouknow.common.dao.QuestionDao;
 import nowyouknow.common.dao.ReactionDao;
 import nowyouknow.common.dao.TopicDao;
 import nowyouknow.common.data.Question;
 import nowyouknow.service.controllers.QuestionController;
 import nowyouknow.service.results.JsonQuestion;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Before;
 import org.mockito.InjectMocks;

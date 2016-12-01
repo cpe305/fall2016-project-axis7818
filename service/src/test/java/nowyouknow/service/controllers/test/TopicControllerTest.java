@@ -15,6 +15,38 @@ import java.util.List;
 public class TopicControllerTest extends NykTopicTester {
 
   @Test
+  public void getTopicByIdTest() throws Exception {
+    Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(TOPIC);
+    
+    String jsonTopic = mapper.writeValueAsString(new JsonTopic(TOPIC));
+    
+    RequestBuilder request = getTopic(Long.toString(TOPIC_ID));
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().json(jsonTopic));
+  }
+  
+  @Test
+  public void getTopicByNameTest() throws Exception {
+    Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(null);
+    Mockito.when(topicDao.findByName(TOPIC_NAME)).thenReturn(TOPIC);
+    
+    String jsonTopic = mapper.writeValueAsString(new JsonTopic(TOPIC));
+    
+    RequestBuilder request = getTopic(TOPIC.getName());
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().json(jsonTopic));
+  }
+  
+  @Test
+  public void getTopicNotFoundTest() throws Exception {
+    Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(null);
+    Mockito.when(topicDao.findByName(TOPIC_NAME)).thenReturn(null);
+    
+    RequestBuilder request = getTopic(TOPIC.getName());
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
+  }
+  
+  @Test
   public void createTopicTest() throws Exception {
     Topic noId = new Topic(TOPIC.getName());
     Topic withId = new Topic(TOPIC_NAME);
