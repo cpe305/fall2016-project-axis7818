@@ -79,7 +79,7 @@ public class QuestionController {
     log.info("Saving new Question: {}", newQuestion.getText());
     Question question = new Question(newQuestion.getText(), topic);
     reactionDao.save(question.getReaction());
-    questionDao.save(question);
+    question = questionDao.save(question);
 
     response.setHeader("Location", "/question/" + question.getId());
   }

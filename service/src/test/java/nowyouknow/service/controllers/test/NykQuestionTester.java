@@ -1,12 +1,14 @@
 package nowyouknow.service.controllers.test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import nowyouknow.common.dao.QuestionDao;
+import nowyouknow.common.dao.ReactionDao;
+import nowyouknow.common.dao.TopicDao;
 import nowyouknow.common.data.Question;
 import nowyouknow.service.controllers.QuestionController;
 import nowyouknow.service.results.JsonQuestion;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Before;
 import org.mockito.InjectMocks;
@@ -14,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -52,6 +55,12 @@ public class NykQuestionTester {
   }
 
   @Mock
+  protected TopicDao topicDao;
+  
+  @Mock
+  protected ReactionDao reactionDao;
+  
+  @Mock
   protected QuestionDao questionDao;
 
   @InjectMocks
@@ -68,7 +77,7 @@ public class NykQuestionTester {
   protected RequestBuilder getQuestion() {
     return getQuestion("", null);
   }
-  
+
   protected RequestBuilder getQuestion(String uri) {
     return getQuestion(uri, null);
   }
@@ -78,5 +87,10 @@ public class NykQuestionTester {
       params = new LinkedMultiValueMap<String, String>();
     }
     return MockMvcRequestBuilders.get(QUESTION_RESOURCE + "/" + uri).params(params);
+  }
+
+  protected RequestBuilder postQuestion(String body) {
+    return MockMvcRequestBuilders.post(QUESTION_RESOURCE + "/").content(body)
+        .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
 }
