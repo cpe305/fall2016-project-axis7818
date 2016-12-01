@@ -1,6 +1,8 @@
 package nowyouknow.service.controllers.test;
 
+import nowyouknow.common.data.Question;
 import nowyouknow.common.data.Topic;
+import nowyouknow.service.results.JsonQuestion;
 import nowyouknow.service.results.JsonTopic;
 import nowyouknow.service.test.utils.TestUtils;
 
@@ -13,6 +15,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TopicControllerTest extends NykTopicTester {
+  
+  @Test
+  public void getTopicQuestionsUnknownTopicTest() throws Exception {
+    Mockito.when(topicDao.findByName(TOPIC_NAME)).thenReturn(null);
+    
+    RequestBuilder request = getTopic(TOPIC_NAME + "/questions");
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
+  }
+  
+  @Test
+  public void getTopicQuestionsTest() throws Exception {
+    Topic topic = new Topic("Topic Name");
+    topic.setId(TOPIC_ID);
+    List<Question> questions = new ArrayList<Question>();
+    int count = 10;
+    for (int i = 0; i < count; ++i) {
+      questions.add(new Question(Integer.toString(i), topic));
+    }
+    topic.setQuestions(questions);
+    
+    Mockito.when(topicDao.findOne(topic.getId())).thenReturn(topic);
+    
+    List<JsonQuestion> jsonQuesions = new ArrayList<JsonQuestion>();
+    for (Question question : questions) {
+      jsonQuesions.add(new JsonQuestion(question));
+    }
+    String jsonQuestionsString = mapper.writeValueAsString(jsonQuesions);
+    
+    RequestBuilder request = getTopic(topic.getId() + "/questions");
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().json(jsonQuestionsString));
+  }
 
   @Test
   public void getTopicByIdTest() throws Exception {

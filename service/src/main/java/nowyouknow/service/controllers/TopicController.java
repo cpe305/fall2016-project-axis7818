@@ -138,19 +138,19 @@ public class TopicController {
    * 
    * @param request the request object.
    * @param response the response object.
-   * @param id the id of the topic.
+   * @param identifier the id or name of the Topic.
    * @return a list of questions that fall under the topic.
    */
-  @RequestMapping(value = "/{id}/questions", method = RequestMethod.GET,
+  @RequestMapping(value = "/{identifier}/questions", method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE)
   public List<JsonQuestion> getQuestions(HttpServletRequest request, HttpServletResponse response,
-      @PathVariable Long id) {
-    if (id == null) {
+      @PathVariable String identifier) {
+    if (identifier == null) {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return new ArrayList<JsonQuestion>();
     }
 
-    Topic topic = topicDao.findOne(id);
+    Topic topic = this.getTopicByIdentifier(identifier);
     if (topic == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return new ArrayList<JsonQuestion>();
