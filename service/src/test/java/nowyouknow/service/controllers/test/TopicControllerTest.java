@@ -9,21 +9,38 @@ import nowyouknow.service.test.utils.TestUtils;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TopicControllerTest extends NykTopicTester {
+
+  @Test
+  public void deleteTopicNotFoundTest() throws Exception {
+    Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(null);
+
+    mockMvc.perform(MockMvcRequestBuilders.delete(TOPIC_RESOURCE + "/" + TOPIC_ID))
+        .andExpect(MockMvcResultMatchers.status().is(404));
+  }
   
+  @Test
+  public void deleteTopicTest() throws Exception {
+    Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(TOPIC);
+
+    mockMvc.perform(MockMvcRequestBuilders.delete(TOPIC_RESOURCE + "/" + TOPIC_ID))
+        .andExpect(MockMvcResultMatchers.status().is(200));
+  }
+
   @Test
   public void getTopicQuestionsUnknownTopicTest() throws Exception {
     Mockito.when(topicDao.findByName(TOPIC_NAME)).thenReturn(null);
-    
+
     RequestBuilder request = getTopic(TOPIC_NAME + "/questions");
     mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
   }
-  
+
   @Test
   public void getTopicQuestionsTest() throws Exception {
     Topic topic = new Topic("Topic Name");
@@ -34,52 +51,52 @@ public class TopicControllerTest extends NykTopicTester {
       questions.add(new Question(Integer.toString(i), topic));
     }
     topic.setQuestions(questions);
-    
+
     Mockito.when(topicDao.findOne(topic.getId())).thenReturn(topic);
-    
+
     List<JsonQuestion> jsonQuesions = new ArrayList<JsonQuestion>();
     for (Question question : questions) {
       jsonQuesions.add(new JsonQuestion(question));
     }
     String jsonQuestionsString = mapper.writeValueAsString(jsonQuesions);
-    
+
     RequestBuilder request = getTopic(topic.getId() + "/questions");
     this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
-      .andExpect(MockMvcResultMatchers.content().json(jsonQuestionsString));
+        .andExpect(MockMvcResultMatchers.content().json(jsonQuestionsString));
   }
 
   @Test
   public void getTopicByIdTest() throws Exception {
     Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(TOPIC);
-    
+
     String jsonTopic = mapper.writeValueAsString(new JsonTopic(TOPIC));
-    
+
     RequestBuilder request = getTopic(Long.toString(TOPIC_ID));
     mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
-      .andExpect(MockMvcResultMatchers.content().json(jsonTopic));
+        .andExpect(MockMvcResultMatchers.content().json(jsonTopic));
   }
-  
+
   @Test
   public void getTopicByNameTest() throws Exception {
     Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(null);
     Mockito.when(topicDao.findByName(TOPIC_NAME)).thenReturn(TOPIC);
-    
+
     String jsonTopic = mapper.writeValueAsString(new JsonTopic(TOPIC));
-    
+
     RequestBuilder request = getTopic(TOPIC.getName());
     mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
-      .andExpect(MockMvcResultMatchers.content().json(jsonTopic));
+        .andExpect(MockMvcResultMatchers.content().json(jsonTopic));
   }
-  
+
   @Test
   public void getTopicNotFoundTest() throws Exception {
     Mockito.when(topicDao.findOne(TOPIC_ID)).thenReturn(null);
     Mockito.when(topicDao.findByName(TOPIC_NAME)).thenReturn(null);
-    
+
     RequestBuilder request = getTopic(TOPIC.getName());
     mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
   }
-  
+
   @Test
   public void createTopicTest() throws Exception {
     Topic noId = new Topic(TOPIC.getName());
@@ -107,22 +124,22 @@ public class TopicControllerTest extends NykTopicTester {
 
     this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
   }
-  
+
   @Test
   public void createTopicNameTooLongTest() throws Exception {
     String longName = TestUtils.stringOfLength(300);
     String json = "{\"name\": \"" + longName + "\"}";
     RequestBuilder request = postTopic(json);
-    
+
     this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
   }
-  
+
   @Test
   public void createTopicDescriptionTooLongTest() throws Exception {
     String longDesc = TestUtils.stringOfLength(1500);
     String json = "{\"name\": \"name\", \"description\": \"" + longDesc + "\"}";
     RequestBuilder request = postTopic(json);
-    
+
     this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
   }
 

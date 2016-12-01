@@ -242,14 +242,7 @@ public class TopicController {
       return;
     }
 
-    Topic topic = null;
-    try {
-      log.info("Trying to get topic by id...");
-      topic = topicDao.findOne(Long.parseLong(identifier));
-    } catch (NumberFormatException nfe) {
-      log.info("Get by id failed, trying again with name...");
-      topic = topicDao.findByName(identifier);
-    }
+    Topic topic = this.getTopicByIdentifier(identifier);
     if (topic == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return;
