@@ -48,4 +48,27 @@ public class AnswerControllerTest extends NykAnswerTester {
     RequestBuilder request = postAnswer(mapper.writeValueAsString(jsonAnswer));
     this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(400));
   }
+  
+  @Test
+  public void getAnswerTest() throws Exception {
+    Long id = 834L;
+    Question question = new Question("test q");
+    Answer answer = new Answer(question, "test a");
+    answer.setId(id);
+    Mockito.when(answerDao.findOne(id)).thenReturn(answer);
+    
+    JsonAnswer jsonAnswer = new JsonAnswer(answer);
+    RequestBuilder request = getAnswer(Long.toString(id));
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().json(mapper.writeValueAsString(jsonAnswer)));
+  }
+  
+  @Test
+  public void getAnswerNotFound() throws Exception {
+    Long id = 32L;
+    Mockito.when(answerDao.findOne(id)).thenReturn(null);
+    
+    RequestBuilder request = getAnswer(Long.toString(id));
+    this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
+  }
 }

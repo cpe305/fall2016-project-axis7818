@@ -10,6 +10,8 @@ import nowyouknow.service.results.JsonAnswer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +41,7 @@ public class AnswerController {
 
   /**
    * Create a new Answer.
+   * 
    * @param request the request object.
    * @param response the response object.
    * @param newAnswer a shallow http friendly version of the answer.
@@ -72,5 +75,33 @@ public class AnswerController {
 
     response.setHeader("Location", "/answer/" + answer.getId());
     return;
+  }
+
+  /**
+   * Get an answer by id.
+   * 
+   * @param request the request object.
+   * @param response the response object.
+   * @param id the id of the answer.
+   * @return a json/http friendly version of the answer.
+   */
+  @RequestMapping(value = "/{id}", method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public JsonAnswer getAnswer(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable Long id) {
+    log.info("GET /answer/" + id);
+    if (id == null) {
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return null;
+    }
+    
+    Answer answer = answerDao.findOne(id);
+    if (answer == null) {
+      log.info("Could not find answer with id: " + id);
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return null;
+    }
+    
+    return new JsonAnswer(answer);
   }
 }

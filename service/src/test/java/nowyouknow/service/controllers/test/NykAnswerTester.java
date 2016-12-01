@@ -48,4 +48,8 @@ public class NykAnswerTester {
     return MockMvcRequestBuilders.post(ANSWER_RESOURCE + "/").content(body)
         .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
+  
+  protected RequestBuilder getAnswer(String uri) {
+    return MockMvcRequestBuilders.get(ANSWER_RESOURCE + "/" + uri);
+  }
 }
