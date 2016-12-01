@@ -122,15 +122,8 @@ public class TopicController {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return null;
     }
-
-    Topic topic = null;
-    try {
-      // first try by id
-      topic = topicDao.findOne(Long.parseLong(identifier));
-    } catch (NumberFormatException nfe) {
-      // otherwise try by name
-      topic = topicDao.findByName(identifier);
-    }
+    
+    Topic topic = getTopicByIdentifier(identifier);
 
     if (topic == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -189,12 +182,7 @@ public class TopicController {
     }
 
     // get the current Topic
-    Topic topic = null;
-    try {
-      topic = topicDao.findOne(Long.parseLong(identifier));
-    } catch (NumberFormatException nfe) {
-      topic = topicDao.findByName(identifier);
-    }
+    Topic topic = this.getTopicByIdentifier(identifier);
     if (topic == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return null;
@@ -268,5 +256,17 @@ public class TopicController {
     }
 
     topicDao.delete(topic.getId());
+  }
+  
+  private Topic getTopicByIdentifier(String identifier) {
+    Topic topic = null;
+    try {
+      // first try by id
+      topic = topicDao.findOne(Long.parseLong(identifier));
+    } catch (NumberFormatException nfe) {
+      // otherwise try by name
+      topic = topicDao.findByName(identifier);
+    }
+    return topic;
   }
 }
