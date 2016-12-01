@@ -60,6 +60,7 @@ public class AnswerController {
       question = questionDao.findOne(newAnswer.getQuestionId());
     }
     if (question == null) {
+      log.info("Could not find question.");
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
@@ -67,7 +68,7 @@ public class AnswerController {
     log.info("Saving answer {}", newAnswer.getText());
     Answer answer = new Answer(question, newAnswer.getText());
     reactionDao.save(answer.getReaction());
-    answerDao.save(answer);
+    answer = answerDao.save(answer);
 
     response.setHeader("Location", "/answer/" + answer.getId());
     return;

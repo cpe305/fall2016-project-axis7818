@@ -187,4 +187,8 @@ Requests to this URI are handled by [AnswerController](https://github.com/cpe305
 
 ### `POST /answer/`
 
+### `PUT /answer/{id}`
+
+### `GET /answer/{id}`
+
 ---

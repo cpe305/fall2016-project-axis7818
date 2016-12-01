@@ -12,7 +12,7 @@ import org.springframework.util.MultiValueMap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionControllerTester extends NykQuestionTester {
+public class QuestionControllerTest extends NykQuestionTester {
 
   @Test
   public void randomQuestionTest() throws Exception {
