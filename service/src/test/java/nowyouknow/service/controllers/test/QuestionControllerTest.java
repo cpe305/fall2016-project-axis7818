@@ -1,8 +1,11 @@
 package nowyouknow.service.controllers.test;
 
+import nowyouknow.common.data.Answer;
 import nowyouknow.common.data.Question;
 import nowyouknow.common.data.Topic;
+import nowyouknow.service.results.JsonAnswer;
 import nowyouknow.service.results.JsonQuestion;
+import nowyouknow.service.test.utils.TestUtils;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -15,6 +18,70 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionControllerTest extends NykQuestionTester {
+
+  @Test
+  public void deleteQuestionTest() throws Exception {
+    Mockito.when(questionDao.findOne(QUESTION_A.getId())).thenReturn(QUESTION_A);
+    
+    RequestBuilder request = deleteQuestion(QUESTION_A.getId());
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(200));
+  }
+  
+  @Test
+  public void deleteQuestionNotFoundTest() throws Exception {
+    Mockito.when(questionDao.findOne(QUESTION_A.getId())).thenReturn(null);
+    
+    RequestBuilder request = deleteQuestion(QUESTION_A.getId());
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
+  }
+  
+  @Test
+  public void getQuestionAnswersTest() throws Exception {
+    Question question = new Question("???");
+    int count = 12;
+    question.setId((long)count);
+    
+    List<Answer> answers = new ArrayList<Answer>();
+    List<JsonAnswer> jsonAnswers = new ArrayList<JsonAnswer>();
+    for (int i = 0; i < count; ++i) {
+      Answer answer = new Answer(question, TestUtils.stringOfLength(i));
+      answers.add(answer);
+      jsonAnswers.add(new JsonAnswer(answer));
+    }
+    question.setAnswers(answers);
+    
+    Mockito.when(questionDao.findOne(question.getId())).thenReturn(question);
+    String body = mapper.writeValueAsString(jsonAnswers);
+    
+    RequestBuilder request = getQuestion(Long.toString(question.getId()) + "/answers");
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().json(body));
+  }
+
+  @Test
+  public void getQuestionAnswersNotFoundTest() throws Exception {
+    Mockito.when(questionDao.findOne(QUESTION_A.getId())).thenReturn(null);
+
+    RequestBuilder request = getQuestion(Long.toString(QUESTION_A.getId()) + "/answers");
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
+  }
+
+  @Test
+  public void getQuestionTest() throws Exception {
+    Mockito.when(questionDao.findOne(QUESTION_A.getId())).thenReturn(QUESTION_A);
+
+    RequestBuilder request = getQuestion(Long.toString(QUESTION_A.getId()));
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.content().json(QUESTION_A_JSON));
+  }
+
+  @Test
+  public void getQuestionNotFoundTest() throws Exception {
+    Mockito.when(questionDao.findOne(QUESTION_A.getId())).thenReturn(null);
+
+    RequestBuilder request = getQuestion(Long.toString(QUESTION_A.getId()));
+    mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().is(404));
+  }
 
   @Test
   public void postQuestionTest() throws Exception {

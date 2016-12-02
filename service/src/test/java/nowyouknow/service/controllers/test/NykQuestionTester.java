@@ -93,4 +93,8 @@ public class NykQuestionTester {
     return MockMvcRequestBuilders.post(QUESTION_RESOURCE + "/").content(body)
         .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
+  
+  protected RequestBuilder deleteQuestion(Long id) {
+    return MockMvcRequestBuilders.delete(QUESTION_RESOURCE + "/" + id);
+  }
 }
