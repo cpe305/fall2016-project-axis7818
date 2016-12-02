@@ -3,6 +3,7 @@ package nowyouknow.service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -24,6 +25,7 @@ public class Application {
    * @throws Exception uh oh.
    */
   public static void main(String[] args) throws Exception {
-    SpringApplication.run(Application.class, args);
+    @SuppressWarnings("unused")
+    ApplicationContext context = SpringApplication.run(Application.class, args); //NOSONAR
   }
 }
