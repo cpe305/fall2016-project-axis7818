@@ -39,8 +39,25 @@ function($http, $q) {
       return def.promise;
    }
 
+   function getQuestionAnswers(questionId) {
+      var request = "/question/" + questionId + "/answers";
+      var def = $q.defer();
+
+      console.log("GET " + request);
+      $http.get(request).success(function(data) {
+         console.log("Got " + data.length + " answers.");
+         def.resolve(data);
+      }).error(function(data, status, headers, config) {
+         console.log(data);
+         def.resolve([]);
+      });
+
+      return def.promise;
+   }
+
    return {
       getRandom: getRandom,
       getQuestion: getQuestion,
+      getQuestionAnswers: getQuestionAnswers,
    };
 }]);

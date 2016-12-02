@@ -8,6 +8,10 @@ function($scope, $question) {
       var currentId = $scope.question && $scope.question.id;
       $question.getRandom(currentId).then(function(question) {
          $scope.question = question;
+         $scope.question.answers = [];
+         $question.getQuestionAnswers(question.id).then(function(answers) {
+            $scope.question.answers = answers;
+         });
       });
    }
 
@@ -24,6 +28,10 @@ function($scope, $routeParams, $question) {
 
    $question.getQuestion($routeParams.questionId).then(function(question) {
       $scope.question = question;
+      $scope.question.answers = [];
+      $question.getQuestionAnswers(question.id).then(function(answers) {
+         $scope.question.answers = answers;
+      });
    });
 
    console.log("Initializing questionController");
