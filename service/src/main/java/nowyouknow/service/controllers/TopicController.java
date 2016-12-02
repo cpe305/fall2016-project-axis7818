@@ -222,7 +222,7 @@ public class TopicController {
       topic.setDescription(newTopic.getDescription());
     }
 
-    topicDao.save(topic);
+    topic = topicDao.save(topic);
     return new JsonTopic(topic);
   }
 

@@ -55,12 +55,17 @@ public class NykTopicTester {
     return MockMvcRequestBuilders.post(TOPIC_RESOURCE + "/").content(body)
         .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
-  
+
   protected RequestBuilder getTopic() {
     return getTopic("");
   }
-  
+
   protected RequestBuilder getTopic(String uri) {
     return MockMvcRequestBuilders.get(TOPIC_RESOURCE + "/" + uri);
+  }
+
+  protected RequestBuilder putTopic(Long id, String body) {
+    return MockMvcRequestBuilders.put(TOPIC_RESOURCE + "/" + id).content(body)
+        .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
 }
