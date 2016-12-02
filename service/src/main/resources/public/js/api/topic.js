@@ -3,6 +3,21 @@ app.service('nykTopic', [
    '$q',
 function($http, $q) {
 
+   function postTopic(topic) {
+      var request = "/topic/";
+      var def = $q.defer();
+
+      console.log("POST " + request);
+      $http.post(request, topic).then(function(response) {
+         console.log(response);
+      }).catch(function(data, status, heaers, config) {
+         console.log(data);
+         def.resolve(null);
+      });
+
+      return def.promise;
+   }
+
    function getAllTopics() {
       var request = "/topic/";
       var def = $q.defer();
@@ -65,5 +80,6 @@ function($http, $q) {
       getTopic: getTopic,
       getQuestions: getQuestions,
       deleteTopic: deleteTopic,
+      postTopic: postTopic,
    };
 }]);

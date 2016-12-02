@@ -1,4 +1,4 @@
-var app = angular.module('nowyouknow', ['ngRoute']);
+var app = angular.module('nowyouknow', ['ngRoute', 'ui.bootstrap']);
 
 app.config(function($routeProvider) {
    $routeProvider
@@ -26,6 +26,7 @@ app.config(function($routeProvider) {
    })
    .when("/about", {
       templateUrl: "templates/about.html",
+      controller: "aboutController",
    })
    .otherwise({
       redirect: "/",
@@ -46,4 +47,21 @@ function($scope, $location, $topic, $question, $answer) {
    $scope.goHome = function() {
       $location.path("/");
    }
+}]);
+
+app.controller('aboutController', [
+   '$scope',
+   'nykDialog',
+   'nykApi',
+function($scope, $dialog, $nyk) {
+   console.log("Initializing aboutController");
+
+   var warning = "This action deletes everything from the database. Are you sure you want to continue?";
+
+   $scope.nuke = function() {
+      $dialog.confirm($scope, "Warning!", warning).then(function() {
+         $nyk.nuke();
+         $dialog.notify($scope, "Don't Panic.", "So long, and thanks for all the fish.");
+      });
+   };
 }]);

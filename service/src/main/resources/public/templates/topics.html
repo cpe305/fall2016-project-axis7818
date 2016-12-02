@@ -16,8 +16,13 @@
             <div class="panel panel-default panel-topic"
                ng-repeat="topic in topics"
                ng-click="topicClicked(topic.id);">
-               <div class="panel-body">
-                  {{ topic.name }}
+               <div class="panel-heading">
+                  <h3>
+                     {{ topic.name }}
+                  </h3>
+               </div>
+               <div class="panel-body" ng-if="topic.description">
+                  {{ topic.description }}
                </div>
             </div>
 

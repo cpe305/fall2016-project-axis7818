@@ -2,14 +2,22 @@
    margin-bottom: 1em;
 }
 
+.req-mark {
+   color: #ff0000;
+   font-size: 0.7em;
+}
+
 .panel-topic:hover {
-   background-color: #90ffd0;
+   border-color: #90ffd0;
+   cursor: pointer;
 }
 
 .panel-question:hover {
    background-color: #90ffd0;
+   cursor: pointer;
 }
 
 .nav-nyk li a:hover {
    background-color: #90ffd0;
+   cursor: pointer;
 }

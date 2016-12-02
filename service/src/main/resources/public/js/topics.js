@@ -4,6 +4,8 @@ app.controller("topicsController", [
    'nykTopic',
    'nykDialog',
 function($scope, $location, $topic, $dialog) {
+   console.log("Initializing topicsController");
+
    $scope.topics = [];
 
    $scope.topicClicked = function(id) {
@@ -12,26 +14,44 @@ function($scope, $location, $topic, $dialog) {
    };
 
    $scope.newTopicClicked = function() {
-      $dialog.createTopic();
+      $dialog.createTopic($scope).then(function(newTopic) {
+         $topic.postTopic(newTopic);
+         loadTopics();
+      });
    }
 
-   console.log("Initializing topicsController");
-   $topic.getAllTopics().then(function(topics) {
-      $scope.topics = topics;
-   });
+   function loadTopics() {
+      $topic.getAllTopics().then(function(topics) {
+         $scope.topics = topics;
+      });
+   }
+
+   loadTopics();
 }]);
 
 app.controller("topicController", [
    '$scope',
    '$routeParams',
    '$location',
+   'nykDialog',
    'nykTopic',
-function($scope, $routeParams, $location, $topic) {
+function($scope, $routeParams, $location, $dialog, $topic) {
+   var gotoTopics = function() {
+      $location.path("/topics");
+   };
+
    $scope.topic = {};
 
+   $scope.askQuestion = function() {
+      console.log("askQuestion");
+   };
+
    $scope.deleteTopic = function(topicId) {
-      $topic.deleteTopic(topicId);
-      $location.path("/topics");
+      var warning = "Are you sure you want to delete " + $scope.topic.name + " and all of the questions under it?";
+      $dialog.confirm($scope, "Delete Topic?", warning).then(function() {
+         $topic.deleteTopic(topicId);
+         $dialog.notify($scope, "Don't Panic.", "So long, and thanks for all the fish.").then(gotoTopics).catch(gotoTopics);
+      });
    };
 
    console.log("Initializing topicController");

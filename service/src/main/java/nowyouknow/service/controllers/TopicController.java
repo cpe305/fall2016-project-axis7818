@@ -78,7 +78,8 @@ public class TopicController {
 
     // save the new topic
     log.info("Saving new topic: %s", newTopic.getName());
-    Topic topic = topicDao.save(new Topic(newTopic.getName()));
+    Topic topic = new Topic(newTopic.getName(), newTopic.getDescription());
+    topic = topicDao.save(topic);
 
     response.setHeader("Location", "/topic/" + topic.getId());
     return;
