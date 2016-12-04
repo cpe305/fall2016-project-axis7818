@@ -233,7 +233,6 @@ public class QuestionController {
     
     // save and return
     reactionDao.save(question.getReaction());
-    questionDao.save(question);
   }
 
   /**

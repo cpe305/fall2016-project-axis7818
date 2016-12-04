@@ -98,8 +98,8 @@ public class NykQuestionTester {
     return MockMvcRequestBuilders.delete(QUESTION_RESOURCE + "/" + id);
   }
 
-  protected RequestBuilder putQuestion(Long id) {
-    return putQuestion(id, "", "");
+  protected RequestBuilder putQuestion(Long id, String body) {
+    return putQuestion(id, "", body);
   }
 
   protected RequestBuilder putQuestion(Long id, String uri, String body) {

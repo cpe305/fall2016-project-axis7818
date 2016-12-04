@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/answer")
 public class AnswerController {
   private static final Logger log = LoggerFactory.getLogger(AnswerController.class);
-  
+
   @Autowired
   private QuestionDao questionDao;
 
@@ -111,5 +111,43 @@ public class AnswerController {
       @PathVariable Long id, @RequestBody JsonAnswer newAnswer) {
     log.info("PUT /answer/" + id);
     return null;
+  }
+
+  /**
+   * React to an Answer.
+   * 
+   * @param request the request object.
+   * @param response the response object.
+   * @param reactionType "like", "dislike", or "laugh".
+   * @param id the id of the answer.
+   * @throws IOException uhoh.
+   */
+  @RequestMapping(value = "/{id}/react/{reactionType}", method = RequestMethod.PUT,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public void react(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable String reactionType, @PathVariable Long id) throws IOException {
+    // get the answer
+    Answer answer = answerDao.findOne(id);
+    if (answer == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return;
+    }
+
+    // react
+    if (reactionType.equals("like")) {
+      answer.getReaction().like();
+    } else if (reactionType.equals("dislike")) {
+      answer.getReaction().dislike();
+    } else if (reactionType.equals("laugh")) {
+      answer.getReaction().laugh();
+    } else {
+      log.info("Unknown reaction type: " + reactionType);
+      // invalid reaction type
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return;
+    }
+
+    // save and return
+    reactionDao.save(answer.getReaction());
   }
 }
