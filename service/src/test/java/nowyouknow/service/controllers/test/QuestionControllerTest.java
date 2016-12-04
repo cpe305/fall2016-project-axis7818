@@ -69,10 +69,12 @@ public class QuestionControllerTest extends NykQuestionTester {
   @Test
   public void getQuestionTest() throws Exception {
     Mockito.when(questionDao.findOne(QUESTION_A.getId())).thenReturn(QUESTION_A);
+    
+    String body = mapper.writeValueAsString(new JsonQuestion(QUESTION_A));
 
     RequestBuilder request = getQuestion(Long.toString(QUESTION_A.getId()));
     mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json(QUESTION_A_JSON));
+        .andExpect(MockMvcResultMatchers.content().json(body));
   }
 
   @Test
@@ -129,9 +131,10 @@ public class QuestionControllerTest extends NykQuestionTester {
     one.add(QUESTION_A);
     Mockito.when(questionDao.findAll()).thenReturn(one);
 
+    String body = mapper.writeValueAsString(new JsonQuestion(QUESTION_A));
     RequestBuilder request = getQuestion("random");
     this.mockMvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json(QUESTION_A_JSON));
+        .andExpect(MockMvcResultMatchers.content().json(body));
   }
 
   @Test

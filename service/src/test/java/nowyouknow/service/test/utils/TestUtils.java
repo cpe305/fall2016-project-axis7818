@@ -1,6 +1,7 @@
 package nowyouknow.service.test.utils;
 
 public class TestUtils {
+  
   /**
    * Create a string of a given length.
    * 
@@ -16,4 +17,5 @@ public class TestUtils {
     
     return result.toString();
   }
+  
 }
