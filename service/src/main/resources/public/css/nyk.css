@@ -2,6 +2,10 @@
    margin-bottom: 1em;
 }
 
+.question-text {
+   text-align: center;
+}
+
 .top-space {
    margin-top: 1em;
 }

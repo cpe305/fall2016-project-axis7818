@@ -9,7 +9,7 @@ function($http, $q) {
 
       console.log("POST " + request);
       $http.post(request, topic).then(function(response) {
-         console.log(response);
+         def.resolve(response);
       }).catch(function(data, status, heaers, config) {
          console.log(data);
          def.resolve(null);

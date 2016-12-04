@@ -6,10 +6,10 @@
 
    <div class="row" ng-if="question">
       <div class="col-lg-1 col-md-2 col-xs-4" align="center">
-         <nyk-reaction reaction="question" type="q"></nyk-reaction>
+         <nyk-reaction reaction="question" type="q" on-react="reactToQuestion"></nyk-reaction>
       </div>
       <div class="col-lg-11 col-md-10 col-xs-8">
-         <h2>{{ question.text }}</h2>
+         <h2 class="question-text">{{ question.text }}</h2>
       </div>
 
       <div class="col-xs-12">
@@ -26,11 +26,8 @@
       </div>
 
       <div class="col-xs-12">
-         <h3>Answers</h3>
-         <hr />
-
          <div ng-repeat="answer in question.answers">
-            <p>{{ answer.text }}</p>
+            <nyk-answer answer="answer"></nyk-answer>
          </div>
       </div>
    </div>

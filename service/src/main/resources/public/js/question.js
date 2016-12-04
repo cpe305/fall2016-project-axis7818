@@ -60,11 +60,28 @@ function($scope, $routeParams, $question, $topic) {
 }]);
 
 app.directive("nykQuestion", [function() {
+   function linker(scope, elem, attrs) {
+      console.log("linking nykQuestion directive");
+
+      scope.reactToQuestion = function(reactionType) {
+         if (reactionType === "like") {
+            ++scope.question.likes;
+         }
+         else if (reactionType === "dislike") {
+            ++scope.question.dislikes;
+         }
+         else if (reactionType === "laugh") {
+            ++scope.question.laughs;
+         }
+      };
+   }
+
    return {
       restrict: 'E',
       templateUrl: "templates/directives/question.html",
       scope: {
          question: '=',
       },
+      link: linker,
    };
 }]);

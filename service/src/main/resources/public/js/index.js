@@ -66,32 +66,55 @@ function($scope, $dialog, $nyk) {
    };
 }]);
 
+app.service("nowyouknow", [function() {
+   var reactionTypes = ["like", "dislike", "laugh"];
+
+   return {
+      validateReactionType: function(reactionType) {
+         if (reactionTypes.indexOf(reactionType) == -1) {
+            throw "Invalid reaction type: " + reactionType;
+            return false;
+         }
+         return true;
+      },
+   };
+}]);
+
 app.directive("nykReaction", [
    'nykQuestion',
    'nykAnswer',
 function($question, $answer) {
    var linker = function(scope, elem, attrs) {
+      console.log(scope.reaction);
+      var reactFunction = null;
+
       if (scope.type === 'q') {
          console.log("linking nykReaction as question");
+         reactFunction = $question.reactToQuestion;
       }
       else if (scope.type === 'a') {
          console.log("linking nykReaction as answer");
+         reactFunction = $answer.reactToAnswer;
       }
       else {
          throw "Unknown reaction type: " + scope.type;
+         return;
       }
 
-      scope.like = function() {
-         console.log("like");
+      var makeReactionFunction = function(reactionType) {
+         return function() {
+            if (reactFunction) {
+               reactFunction(scope.reaction.id, reactionType).then(function(success) {
+                  if (success) {
+                     scope.onReact(reactionType);
+                  }
+               });
+            }
+         };
       };
-
-      scope.dislike = function() {
-         console.log("dislike");
-      };
-
-      scope.laugh = function() {
-         console.log("laugh");
-      };
+      scope.like = makeReactionFunction("like");
+      scope.dislike = makeReactionFunction("dislike");
+      scope.laugh = makeReactionFunction("laugh");
    };
 
    return {
@@ -100,6 +123,7 @@ function($question, $answer) {
       scope: {
          reaction: '=',
          type: '@',
+         onReact: '=',
       },
       link: linker,
    };

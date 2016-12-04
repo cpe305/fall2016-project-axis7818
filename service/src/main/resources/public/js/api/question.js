@@ -1,7 +1,8 @@
 app.service('nykQuestion', [
    '$http',
    '$q',
-function($http, $q) {
+   'nowyouknow',
+function($http, $q, $nyk) {
 
    function getRandom(excludeId) {
       var request = "/question/random";
@@ -55,9 +56,30 @@ function($http, $q) {
       return def.promise;
    }
 
+   function reactToQuestion(questionId, reactionType) {
+      var request = "/question/" + questionId + "/react/" + reactionType;
+      var def = $q.defer();
+      if (!$nyk.validateReactionType(reactionType)) {
+         def.resolve(false);
+         return def.promise;
+      }
+
+      console.log("PUT " + request);
+      $http.put(request).success(function() {
+         console.log(reactionType + " question success");
+         def.resolve(true);
+      }).error(function(data, status, headers, config) {
+         console.log(data);
+         def.resolve(false);
+      });
+
+      return def.promise;
+   }
+
    return {
       getRandom: getRandom,
       getQuestion: getQuestion,
       getQuestionAnswers: getQuestionAnswers,
+      reactToQuestion: reactToQuestion,
    };
 }]);

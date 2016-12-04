@@ -15,8 +15,10 @@ function($scope, $location, $topic, $dialog) {
 
    $scope.newTopicClicked = function() {
       $dialog.createTopic($scope).then(function(newTopic) {
-         $topic.postTopic(newTopic);
-         loadTopics();
+         $topic.postTopic(newTopic).then(function() {
+            console.log("topic made");
+            loadTopics();
+         });
       });
    }
 

@@ -1,0 +1,23 @@
+<div>
+
+   <div class="alert alert-danger" ng-if="!answer">
+      <p>Could not find an answer. Try again later!</p>
+   </div>
+
+   <div class="row" ng-if="answer">
+      <div class="col-xs-sm well">
+         <div class="row">
+
+            <div class="col-lg-1 col-md-2 col-xs-4" align="center">
+               <nyk-reaction reaction="answer" type="a" on-react="reactToAnswer"></nyk-reaction>
+            </div>
+            <div class="col-lg-11 col-md-2 col-xs-8">
+               <h3>{{ answer.text }}</h3>
+            </div>
+
+         </div>
+      </div>
+
+   </div>
+
+</div>
