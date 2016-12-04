@@ -1,15 +1,38 @@
 <div>
 
-   <div ng-if="question">
-      <h2>{{ question.text }}</h2>
-
-      <div ng-repeat="answer in question.answers">
-         <p>{{ answer.text }}</p>
-      </div>
-
-   </div>
    <div class="alert alert-danger" ng-if="!question">
       <p>Could not find a question. Try again later!</p>
+   </div>
+
+   <div class="row" ng-if="question">
+      <div class="col-lg-1 col-md-2 col-xs-4" align="center">
+         <nyk-reaction reaction="question" type="q"></nyk-reaction>
+      </div>
+      <div class="col-lg-11 col-md-10 col-xs-8">
+         <h2>{{ question.text }}</h2>
+      </div>
+
+      <div class="col-xs-12">
+         <table class="table table-question-details top-space">
+            <tr ng-if="question.topic">
+               <td>topic: </td>
+               <td>{{ question.topic.name }}</td>
+            </tr>
+            <tr>
+               <td>asked: </td>
+               <td>{{ question.whenAsked | date:'dd MMM yyyy' }}</td>
+            </tr>
+         </table>
+      </div>
+
+      <div class="col-xs-12">
+         <h3>Answers</h3>
+         <hr />
+
+         <div ng-repeat="answer in question.answers">
+            <p>{{ answer.text }}</p>
+         </div>
+      </div>
    </div>
 
 </div>

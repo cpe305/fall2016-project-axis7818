@@ -1,0 +1,28 @@
+<table class="table-reaction">
+   <tr>
+      <td class="text-success">{{ reaction.likes }}</td>
+      <td>
+         <div class="label label-success" ng-click="like();">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+            like
+         </div>
+      </td>
+   </tr>
+   <tr>
+      <td class="text-danger">{{ reaction.dislikes }}</td>
+      <td>
+         <div class="label label-danger" ng-click="dislike();">
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+            dislike
+         </div>
+      </td>
+   </tr>
+   <tr>
+      <td class="text-info">{{ reaction.laughs }}</td>
+      <td>
+         <div class="label label-info" ng-click="laugh();">
+            laugh
+         </div>
+      </td>
+   </tr>
+</table>

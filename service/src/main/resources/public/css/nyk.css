@@ -2,9 +2,17 @@
    margin-bottom: 1em;
 }
 
+.top-space {
+   margin-top: 1em;
+}
+
 .req-mark {
    color: #ff0000;
    font-size: 0.7em;
+}
+
+.btn-random-question {
+   margin-bottom: 1em;
 }
 
 .panel-topic:hover {
@@ -17,7 +25,18 @@
    cursor: pointer;
 }
 
+.table-question-details {
+   font-size: 0.8em;
+}
+
 .nav-nyk li a:hover {
    background-color: #90ffd0;
    cursor: pointer;
+}
+
+.table-reaction tr td:nth-of-type(2) .label {
+   cursor: pointer;
+}
+.table-reaction tr td:first-of-type  {
+   padding-right: 1em;
 }

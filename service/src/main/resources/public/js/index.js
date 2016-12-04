@@ -65,3 +65,42 @@ function($scope, $dialog, $nyk) {
       });
    };
 }]);
+
+app.directive("nykReaction", [
+   'nykQuestion',
+   'nykAnswer',
+function($question, $answer) {
+   var linker = function(scope, elem, attrs) {
+      if (scope.type === 'q') {
+         console.log("linking nykReaction as question");
+      }
+      else if (scope.type === 'a') {
+         console.log("linking nykReaction as answer");
+      }
+      else {
+         throw "Unknown reaction type: " + scope.type;
+      }
+
+      scope.like = function() {
+         console.log("like");
+      };
+
+      scope.dislike = function() {
+         console.log("dislike");
+      };
+
+      scope.laugh = function() {
+         console.log("laugh");
+      };
+   };
+
+   return {
+      restrict: 'E',
+      templateUrl: "templates/directives/reaction.html",
+      scope: {
+         reaction: '=',
+         type: '@',
+      },
+      link: linker,
+   };
+}]);
