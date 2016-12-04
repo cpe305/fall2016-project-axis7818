@@ -56,10 +56,10 @@ public class NykQuestionTester {
 
   @Mock
   protected TopicDao topicDao;
-  
+
   @Mock
   protected ReactionDao reactionDao;
-  
+
   @Mock
   protected QuestionDao questionDao;
 
@@ -93,8 +93,22 @@ public class NykQuestionTester {
     return MockMvcRequestBuilders.post(QUESTION_RESOURCE + "/").content(body)
         .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
-  
+
   protected RequestBuilder deleteQuestion(Long id) {
     return MockMvcRequestBuilders.delete(QUESTION_RESOURCE + "/" + id);
+  }
+
+  protected RequestBuilder putQuestion(Long id) {
+    return putQuestion(id, "", "");
+  }
+
+  protected RequestBuilder putQuestion(Long id, String uri, String body) {
+    if (uri != null && !uri.isEmpty()) {
+      uri = "/" + uri;
+    }
+    String request = QUESTION_RESOURCE + "/" + id + uri;
+    log.info(request);
+    return MockMvcRequestBuilders.put(request).content(body)
+        .contentType(MediaType.APPLICATION_JSON_VALUE);
   }
 }

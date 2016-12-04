@@ -123,26 +123,26 @@ public class QuestionController {
   public JsonQuestion getRandom(HttpServletRequest request, HttpServletResponse response) {
     Long excludeId = null;
     try {
-      excludeId = Long.parseLong(request.getParameter("excludeId"));      
+      excludeId = Long.parseLong(request.getParameter("excludeId"));
     } catch (NumberFormatException nfe) {
       log.info("Could not determine excludeId.");
     }
-    
+
     Iterator<Question> questionIter = questionDao.findAll().iterator();
-    
+
     List<Question> questions = new ArrayList<Question>();
     while (questionIter.hasNext()) {
       Question nextQ = questionIter.next();
       if (!nextQ.getId().equals(excludeId)) {
-        questions.add(nextQ);        
+        questions.add(nextQ);
       }
     }
-    
+
     if (questions.isEmpty()) {
       response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
       return null;
     }
-    
+
     int index = random.nextInt(questions.size());
     return new JsonQuestion(questions.get(index));
   }
@@ -195,6 +195,45 @@ public class QuestionController {
     // TODO: check if a PUT to question is necessary.
     response.setStatus(HttpServletResponse.SC_NOT_IMPLEMENTED);
     return null;
+  }
+
+  /**
+   * React to a question.
+   * 
+   * @param request the request object.
+   * @param response the response object.
+   * @param id the id of the question.
+   * @param reactionType "like", "dislike", or "laugh"
+   * @throws IOException uhoh.
+   */
+  @RequestMapping(value = "/{id}/react/{reactionType}", method = RequestMethod.PUT,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public void react(HttpServletRequest request, HttpServletResponse response,
+      @PathVariable String reactionType, @PathVariable Long id) throws IOException {
+    // get the question
+    Question question = questionDao.findOne(id);
+    if (question == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+      return;
+    }
+    
+    // react
+    if (reactionType.equals("like")) {
+      question.getReaction().like();
+    } else if (reactionType.equals("dislike")) {
+      question.getReaction().dislike();
+    } else if (reactionType.equals("laugh")) {
+      question.getReaction().laugh();
+    } else {
+      log.info("Unknown reactionType: " + reactionType);
+      // invalid reaction type
+      response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      return;
+    }
+    
+    // save and return
+    reactionDao.save(question.getReaction());
+    questionDao.save(question);
   }
 
   /**
