@@ -18,7 +18,9 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
 							}
 						}
 					],
@@ -41,7 +43,20 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar ID_KEY = \"q1_id\";\nif (ok) {\n    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();\n    postman.setEnvironmentVariable(ID_KEY, id);\n}\nelse {\n    postman.clearEnvironmentVariable(ID_KEY);\n}\n\n"
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var ID_KEY = \"q1_id\";",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(ID_KEY, id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(ID_KEY);",
+									"}",
+									"",
+									""
+								]
 							}
 						}
 					],
@@ -70,7 +85,9 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
 							}
 						}
 					],
@@ -99,7 +116,9 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
 							}
 						}
 					],
@@ -128,7 +147,12 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar answers = JSON.parse(responseBody);\ntests[\"got 2 answers\"] = answers.length === 2;"
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var answers = JSON.parse(responseBody);",
+									"tests[\"got 2 answers\"] = answers.length === 2;"
+								]
 							}
 						}
 					],
@@ -151,7 +175,18 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar ID_KEY = \"hhgttg_id\";\nif (ok) {\n    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();\n    postman.setEnvironmentVariable(ID_KEY, id);\n}\nelse {\n    postman.clearEnvironmentVariable(ID_KEY);\n}"
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var ID_KEY = \"hhgttg_id\";",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(ID_KEY, id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(ID_KEY);",
+									"}"
+								]
 							}
 						}
 					],
@@ -167,7 +202,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Hitchhiker's Guide To The Galaxy\"\n}"
+							"raw": "{\n\t\"name\": \"Hitchhiker's Guide To The Galaxy\",\n\t\"description\": \"I'd far rather be happy than right any day.\"\n}"
 						},
 						"description": ""
 					},
@@ -180,7 +215,14 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var topic = JSON.parse(responseBody);\n    tests[\"correct id\"] = topic.id == postman.getEnvironmentVariable(\"hhgttg_id\");\n}"
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var topic = JSON.parse(responseBody);",
+									"    tests[\"correct id\"] = topic.id == postman.getEnvironmentVariable(\"hhgttg_id\");",
+									"}"
+								]
 							}
 						}
 					],
@@ -203,7 +245,17 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();\n    postman.setEnvironmentVariable(\"q2_id\", id);\n}\nelse {\n    postman.clearEnvironmentVariable(\"q2_id\");\n}"
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(\"q2_id\", id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(\"q2_id\");",
+									"}"
+								]
 							}
 						}
 					],
@@ -246,7 +298,17 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();\n    postman.setEnvironmentVariable(\"q3_id\", id);\n}\nelse {\n    postman.clearEnvironmentVariable(\"q3_id\");\n}"
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(\"q3_id\", id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(\"q3_id\");",
+									"}"
+								]
 							}
 						}
 					],
@@ -275,7 +337,17 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();\n    postman.setEnvironmentVariable(\"q4_id\", id);\n}\nelse {\n    postman.clearEnvironmentVariable(\"q4_id\");\n}"
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(\"q4_id\", id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(\"q4_id\");",
+									"}"
+								]
 							}
 						}
 					],
@@ -298,13 +370,40 @@
 					"response": []
 				},
 				{
+					"name": "like question",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/{{q4_id}}/react/like",
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "Question 4 Answer 1",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;"
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
 							}
 						}
 					],
@@ -333,7 +432,12 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "tests[\"Status code is 200\"] = responseCode.code === 200;\n\nvar answers = JSON.parse(responseBody);\ntests[\"got 1 answer\"] = answers.length === 1;"
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var answers = JSON.parse(responseBody);",
+									"tests[\"got 1 answer\"] = answers.length === 1;"
+								]
 							}
 						}
 					],
@@ -356,7 +460,14 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var ok = tests[\"Status code is 200\"] = responseCode.code === 200;\n\nif (ok) {\n    var questions = JSON.parse(responseBody);\n    tests[\"got 3 quetsions\"] = questions.length == 3;\n}"
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var questions = JSON.parse(responseBody);",
+									"    tests[\"got 3 quetsions\"] = questions.length == 3;",
+									"}"
+								]
 							}
 						}
 					],
