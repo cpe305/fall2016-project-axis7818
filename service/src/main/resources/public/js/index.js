@@ -7,6 +7,11 @@ app.config(function($routeProvider) {
    })
    .when("/ask", {
       templateUrl: "templates/ask.html",
+      controller: "askController",
+   })
+   .when("/ask/:topicId", {
+      templateUrl: "templates/ask.html",
+      controller: "askController",
    })
    .when("/random", {
       templateUrl: "templates/random.html",

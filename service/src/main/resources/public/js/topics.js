@@ -45,7 +45,9 @@ function($scope, $routeParams, $location, $dialog, $topic) {
    $scope.topic = {};
 
    $scope.askQuestion = function() {
-      console.log("askQuestion");
+      if ($scope.topic && $scope.topic.id) {
+         $location.path("/ask/" + $scope.topic.id);
+      }
    };
 
    $scope.deleteTopic = function(topicId) {

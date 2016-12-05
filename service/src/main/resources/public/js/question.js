@@ -71,8 +71,6 @@ function($answer) {
    function($scope, $answer, $question) {
       console.log("Initializing nykQuestion controller");
 
-      $scope.newAnswerText = "";
-
       $scope.reactToQuestion = function(reactionType) {
          if (reactionType === "like") {
             ++$scope.question.likes;
@@ -93,6 +91,7 @@ function($answer) {
          }).then(function(answerId) {
             $question.getQuestionAnswers($scope.question.id).then(function(answers) {
                $scope.question.answers = answers;
+               $scope.newAnswerText = "";
             });
          });
       };
