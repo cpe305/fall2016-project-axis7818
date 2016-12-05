@@ -2,8 +2,9 @@ var app = angular.module('nowyouknow', ['ngRoute', 'ui.bootstrap']);
 
 app.config(function($routeProvider) {
    $routeProvider
-   .when("/", {
-      templateUrl: "templates/home.html",
+   .when("/browse", {
+      templateUrl: "templates/browse.html",
+      controller: "",
    })
    .when("/ask", {
       templateUrl: "templates/ask.html",
@@ -34,7 +35,7 @@ app.config(function($routeProvider) {
       controller: "aboutController",
    })
    .otherwise({
-      redirect: "/",
+      redirect: "/browse",
    });
 });
 
@@ -50,7 +51,7 @@ function($scope, $location, $topic, $question, $answer) {
    $scope.slogan = "A web service where you can ask and answer simple/stupid questions.";
 
    $scope.goHome = function() {
-      $location.path("/");
+      $location.path("/browse");
    }
 }]);
 

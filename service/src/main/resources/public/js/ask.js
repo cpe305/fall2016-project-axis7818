@@ -1,30 +1,32 @@
 app.controller("askController", [
    '$scope',
    '$routeParams',
+   '$location',
    'nykTopic',
    'nykQuestion',
-function($scope, $routeParams, $topic, $question) {
+function($scope, $routeParams, $location, $topic, $question) {
    console.log("Initializing the askController");
 
-   $scope.topicChoice = {
-      topics: [],       // a list of topic objects
-      topicId: null,    // the id of the currently selected topic
-   };
+   $scope.topic = null;
 
    $scope.question = {
       text: "",         // the question text
       topicId: null,    // the id of the topic (optional)
    };
 
-   // get all topics
-   $topic.getAllTopics().then(function(topics) {
-      $scope.topicChoice.topics = topics;
-   }).then(function() {
-      if (!$routeParams.topicId) return;
+   $scope.askQuestion = function() {
+      $question.postQuestion($scope.question).then(function(questionId) {
+         if (questionId) {
+            $location.path("/question/" + questionId);
+         }
+      });
+   };
 
-      // set the current topic
-      if ($scope.topicChoice.topics.find(function(topic) { return topic.id == $routeParams.topicId })) {
-         $scope.topicChoice.topicId = $routeParams.topicId;
-      }
-   });
+   if ($routeParams.topicId) {
+      $topic.getTopic($routeParams.topicId).then(function(topic) {
+         $scope.topic = topic;
+         $scope.question.topicId = topic.id;
+      });
+   }
+
 }]);

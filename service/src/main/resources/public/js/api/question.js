@@ -76,10 +76,27 @@ function($http, $q, $nyk) {
       return def.promise;
    }
 
+   function postQuestion(question) {
+      var request = "/question/";
+      var def = $q.defer();
+
+      console.log(request);
+      $http.post(request, question).success(function(data, status, headers) {
+         console.log("posted question: " + headers("Location"));
+         def.resolve(parseInt(headers("Location").split("/").pop()));
+      }).error(function() {
+         console.log("An error occurred while posting question");
+         def.resolve(null);
+      });
+
+      return def.promise;
+   }
+
    return {
       getRandom: getRandom,
       getQuestion: getQuestion,
       getQuestionAnswers: getQuestionAnswers,
       reactToQuestion: reactToQuestion,
+      postQuestion: postQuestion,
    };
 }]);
