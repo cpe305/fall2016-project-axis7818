@@ -11,8 +11,16 @@
             <div class="col-lg-1 col-md-2 col-xs-4" align="center">
                <nyk-reaction reaction="answer" type="a" on-react="reactToAnswer"></nyk-reaction>
             </div>
-            <div class="col-lg-11 col-md-2 col-xs-8">
+            <div class="col-lg-9 col-md-8 col-xs-4">
                <h3>{{ answer.text }}</h3>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-4">
+               <table class="table table-answer-details">
+                  <tr>
+                     <td>answered</td>
+                     <td>{{ answer.whenAnswered | date:'dd MMM yyyy' }}</td>
+                  </tr>
+               </table>
             </div>
 
          </div>

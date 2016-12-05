@@ -4,6 +4,23 @@ app.service('nykAnswer', [
    'nowyouknow',
 function($http, $q, $nyk) {
 
+   function postAnswer(answer) {
+      var request = "/answer/";
+      var def = $q.defer();
+
+      console.log("POST " + request);
+      $http.post(request, answer).success(function(data, status, headers, config) {
+         console.log("posted answer");
+         console.log(headers("Location"));
+         def.resolve(parseInt(headers("Location").split("/").pop()));
+      }).error(function() {
+         console.log("An error occurred while posting answer");
+         def.resolve(null);
+      });
+
+      return def.promise;
+   }
+
    function reactToAnswer(answerId, reactionType) {
       var request = "/answer/" + answerId + "/react/" + reactionType;
       var def = $q.defer();
@@ -26,5 +43,6 @@ function($http, $q, $nyk) {
 
    return {
       reactToAnswer: reactToAnswer,
+      postAnswer: postAnswer,
    };
 }]);

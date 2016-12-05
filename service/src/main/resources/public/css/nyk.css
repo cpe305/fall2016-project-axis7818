@@ -33,6 +33,11 @@
    font-size: 0.8em;
 }
 
+.table-answer-details {
+   font-size: 0.8em;
+   margin-bottom: 0;
+}
+
 .nav-nyk li a:hover {
    background-color: #90ffd0;
    cursor: pointer;

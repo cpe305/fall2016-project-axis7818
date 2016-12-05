@@ -3,6 +3,8 @@ package nowyouknow.service.results;
 import nowyouknow.common.data.Answer;
 import nowyouknow.common.data.Reaction;
 
+import java.util.Date;
+
 /**
  * A json/http friendly version of an answer object.
  */
@@ -14,6 +16,7 @@ public class JsonAnswer {
   private Integer likes;
   private Integer dislikes;
   private Integer laughs;
+  private Date whenAnswered;
 
   public JsonAnswer() {
     // empty constructor for serialization purposes
@@ -26,6 +29,7 @@ public class JsonAnswer {
   public JsonAnswer(Answer answer) {
     this.setId(answer.getId());
     this.setText(answer.getText());
+    this.whenAnswered = answer.getWhenAnswered();
     this.setQuestionId(answer.getQuestion().getId());
     
     Reaction reaction = answer.getReaction();
@@ -80,5 +84,13 @@ public class JsonAnswer {
 
   public void setText(String text) {
     this.text = text;
+  }
+  
+  public Date getWhenAnswered() {
+    return whenAnswered;
+  }
+  
+  public void setWhenAnswered(Date whenAnswered) {
+    this.whenAnswered = whenAnswered;
   }
 }

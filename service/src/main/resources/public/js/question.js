@@ -9,6 +9,7 @@ function($scope, $question, $topic) {
       var currentId = $scope.question && $scope.question.id;
       $question.getRandom(currentId).then(function(question) {
          $scope.question = question;
+         if (!$scope.question) return;
 
          // Get Answers
          $scope.question.answers = [];
@@ -59,22 +60,43 @@ function($scope, $routeParams, $question, $topic) {
    console.log("Initializing questionController");
 }]);
 
-app.directive("nykQuestion", [function() {
-   function linker(scope, elem, attrs) {
-      console.log("linking nykQuestion directive");
+app.directive("nykQuestion", [
+   'nykAnswer',
+function($answer) {
 
-      scope.reactToQuestion = function(reactionType) {
+   var controller = [
+      '$scope',
+      'nykAnswer',
+      'nykQuestion',
+   function($scope, $answer, $question) {
+      console.log("Initializing nykQuestion controller");
+
+      $scope.newAnswerText = "";
+
+      $scope.reactToQuestion = function(reactionType) {
          if (reactionType === "like") {
-            ++scope.question.likes;
+            ++$scope.question.likes;
          }
          else if (reactionType === "dislike") {
-            ++scope.question.dislikes;
+            ++$scope.question.dislikes;
          }
          else if (reactionType === "laugh") {
-            ++scope.question.laughs;
+            ++$scope.question.laughs;
          }
       };
-   }
+
+      $scope.answerQuestion = function(answerText) {
+         console.log("Answering question " + $scope.question.id);
+         $answer.postAnswer({
+            text: answerText,
+            questionId: $scope.question.id,
+         }).then(function(answerId) {
+            $question.getQuestionAnswers($scope.question.id).then(function(answers) {
+               $scope.question.answers = answers;
+            });
+         });
+      };
+   }];
 
    return {
       restrict: 'E',
@@ -82,6 +104,6 @@ app.directive("nykQuestion", [function() {
       scope: {
          question: '=',
       },
-      link: linker,
+      controller: controller,
    };
 }]);

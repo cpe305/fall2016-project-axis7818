@@ -218,11 +218,11 @@ public class QuestionController {
     }
     
     // react
-    if (reactionType.equals("like")) {
+    if ("like".equals(reactionType)) {
       question.getReaction().like();
-    } else if (reactionType.equals("dislike")) {
+    } else if ("dislike".equals(reactionType)) {
       question.getReaction().dislike();
-    } else if (reactionType.equals("laugh")) {
+    } else if ("laugh".equals(reactionType)) {
       question.getReaction().laugh();
     } else {
       log.info("Unknown reactionType: " + reactionType);
