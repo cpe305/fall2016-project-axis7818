@@ -80,7 +80,7 @@ function($http, $q, $nyk) {
       var request = "/question/";
       var def = $q.defer();
 
-      console.log(request);
+      console.log("POST " + request);
       $http.post(request, question).success(function(data, status, headers) {
          console.log("posted question: " + headers("Location"));
          def.resolve(parseInt(headers("Location").split("/").pop()));
@@ -92,11 +92,28 @@ function($http, $q, $nyk) {
       return def.promise;
    }
 
+   function getAllQuestions() {
+      var request = "/question/";
+      var def = $q.defer();
+
+      console.log("GET " + request);
+      $http.get(request).success(function(data) {
+         console.log("found " + data.length + " questions");
+         def.resolve(data);
+      }).error(function(data) {
+         console.log(data);
+         def.resolve([]);
+      });
+
+      return def.promise;
+   }
+
    return {
       getRandom: getRandom,
       getQuestion: getQuestion,
       getQuestionAnswers: getQuestionAnswers,
       reactToQuestion: reactToQuestion,
+      getAllQuestions: getAllQuestions,
       postQuestion: postQuestion,
    };
 }]);

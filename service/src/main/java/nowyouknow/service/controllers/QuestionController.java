@@ -85,6 +85,25 @@ public class QuestionController {
   }
 
   /**
+   * Get a list of all questions.
+   * 
+   * @param request the request object.
+   * @param response the response object.
+   * @return a list of http/json friendly question objects.
+   */
+  @RequestMapping(value = "/", method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<JsonQuestion> getAll(HttpServletRequest request, HttpServletResponse response) {
+    Iterator<Question> questionIter = questionDao.findAll().iterator();
+    
+    List<JsonQuestion> questions = new ArrayList<JsonQuestion>();
+    while (questionIter.hasNext()) {
+      questions.add(new JsonQuestion(questionIter.next()));
+    }
+    return questions;
+  }
+
+  /**
    * Get a question by id.
    * 
    * @param request the request object.
@@ -216,7 +235,7 @@ public class QuestionController {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
       return;
     }
-    
+
     // react
     if ("like".equals(reactionType)) {
       question.getReaction().like();
@@ -230,7 +249,7 @@ public class QuestionController {
       response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       return;
     }
-    
+
     // save and return
     reactionDao.save(question.getReaction());
   }

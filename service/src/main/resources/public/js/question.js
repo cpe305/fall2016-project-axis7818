@@ -106,3 +106,13 @@ function($answer) {
       controller: controller,
    };
 }]);
+
+app.directive("questionPreview", [function() {
+   return {
+      restrict: 'E',
+      templateUrl: "templates/directives/questionPreview.html",
+      scope: {
+         question: '=',
+      },
+   };
+}]);

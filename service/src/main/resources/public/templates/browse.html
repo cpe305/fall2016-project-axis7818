@@ -1,3 +1,18 @@
 <div>
-   <p>browse template</p>
+   <div class="recently-asked">
+      <h2>Recently Asked</h2>
+      <div ng-repeat="question in recentlyAsked">
+         <question-preview question="question"></question-preview>
+      </div>
+   </div>
+   <hr>
+
+   <div class="most-liked">
+      <h2>Most Liked</h2>
+      <div ng-repeat="question in mostLiked">
+         <question-preview question="question"></question-preview>
+      </div>
+   </div>
+   <hr>
+
 </div>

@@ -2,9 +2,13 @@ var app = angular.module('nowyouknow', ['ngRoute', 'ui.bootstrap']);
 
 app.config(function($routeProvider) {
    $routeProvider
+   .when("/", {
+      templateUrl: "templates/browse.html",
+      controller: "browseController",
+   })
    .when("/browse", {
       templateUrl: "templates/browse.html",
-      controller: "",
+      controller: "browseController",
    })
    .when("/ask", {
       templateUrl: "templates/ask.html",
@@ -48,7 +52,7 @@ app.controller('indexController', [
 function($scope, $location, $topic, $question, $answer) {
    console.log("Initializing indexController");
 
-   $scope.slogan = "A web service where you can ask and answer simple/stupid questions.";
+   $scope.slogan = "A website where you can ask and answer simple/stupid questions.";
 
    $scope.goHome = function() {
       $location.path("/browse");
