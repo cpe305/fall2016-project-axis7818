@@ -108,11 +108,31 @@ function($answer) {
 }]);
 
 app.directive("questionPreview", [function() {
+
+   var controller = [
+      '$scope',
+   function($scope) {
+      console.log("initializing questionPreview controller");
+
+      $scope.reactToQuestion = function(reactionType) {
+         if (reactionType === "like") {
+            ++$scope.question.likes;
+         }
+         else if (reactionType === "dislike") {
+            ++$scope.question.dislikes;
+         }
+         else if (reactionType === "laugh") {
+            ++$scope.question.laughs;
+         }
+      };
+   }];
+
    return {
       restrict: 'E',
       templateUrl: "templates/directives/questionPreview.html",
       scope: {
          question: '=',
       },
+      controller: controller,
    };
 }]);

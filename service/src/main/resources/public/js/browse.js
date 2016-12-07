@@ -1,7 +1,8 @@
 app.controller("browseController", [
    '$scope',
    'nykQuestion',
-function($scope, $question) {
+   'nykTopic',
+function($scope, $question, $topic) {
    console.log("initializing browseController");
 
    $scope.recentlyAsked = [];
@@ -19,5 +20,21 @@ function($scope, $question) {
          return a.likes < b.likes;
       })
       $scope.mostLiked = questions.slice(0, 5);
+
+      // set any topics
+      $topic.getAllTopics().then(function(data) {
+         var topics = {};
+         data.forEach(function(topic) {
+            topics[topic.id] = topic;
+         });
+
+         var setTopic = function(question) {
+            if (question.topicId) {
+               question.topic = topics[question.topicId];
+            }
+         };
+         $scope.recentlyAsked.forEach(setTopic);
+         $scope.mostLiked.forEach(setTopic);
+      });
    });
 }]);
