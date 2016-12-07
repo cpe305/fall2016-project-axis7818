@@ -1,16 +1,22 @@
 <div>
    <div class="recently-asked">
       <h2>Recently Asked</h2>
-      <div ng-repeat="question in recentlyAsked">
+      <div ng-repeat="question in recentlyAsked" ng-if="recentlyAsked.length">
          <question-preview question="question"></question-preview>
+      </div>
+      <div class="alert alert-warning" ng-if="!recentlyAsked.length">
+         <p>There are no questions!</p>
       </div>
    </div>
    <hr>
 
    <div class="most-liked">
       <h2>Most Liked</h2>
-      <div ng-repeat="question in mostLiked">
+      <div ng-repeat="question in mostLiked" ng-if="mostLiked.length">
          <question-preview question="question"></question-preview>
+      </div>
+      <div class="alert alert-warning" ng-if="!mostLiked.length">
+         <p>There are no questions!</p>
       </div>
    </div>
    <hr>

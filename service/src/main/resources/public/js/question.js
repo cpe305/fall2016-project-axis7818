@@ -71,6 +71,10 @@ function($answer) {
    function($scope, $answer, $question) {
       console.log("Initializing nykQuestion controller");
 
+      $scope.newAnswerText = {
+         value: "",
+      };
+
       $scope.reactToQuestion = function(reactionType) {
          if (reactionType === "like") {
             ++$scope.question.likes;
@@ -91,7 +95,7 @@ function($answer) {
          }).then(function(answerId) {
             $question.getQuestionAnswers($scope.question.id).then(function(answers) {
                $scope.question.answers = answers;
-               $scope.newAnswerText = "";
+               $scope.newAnswerText.value = "";
             });
          });
       };
@@ -111,7 +115,8 @@ app.directive("questionPreview", [function() {
 
    var controller = [
       '$scope',
-   function($scope) {
+      '$location',
+   function($scope, $location) {
       console.log("initializing questionPreview controller");
 
       $scope.reactToQuestion = function(reactionType) {
@@ -124,6 +129,10 @@ app.directive("questionPreview", [function() {
          else if (reactionType === "laugh") {
             ++$scope.question.laughs;
          }
+      };
+
+      $scope.questionClicked = function() {
+         $location.path("/question/" + $scope.question.id);
       };
    }];
 

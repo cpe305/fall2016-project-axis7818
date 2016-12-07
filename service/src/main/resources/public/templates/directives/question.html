@@ -37,9 +37,9 @@
          <div align="left">
             <hr>
             <h3>New Answer</h3>
-            <input type="text" class="form-control" ng-model="newAnswerText">
+            <input type="text" class="form-control" ng-model="newAnswerText.value">
             <div align="right">
-               <button type="button" class="btn btn-primary top-space" ng-click="answerQuestion(newAnswerText);" ng-disabled="!newAnswerText">
+               <button type="button" class="btn btn-primary top-space" ng-click="answerQuestion(newAnswerText.value);" ng-disabled="!newAnswerText.value">
                   <span class="glyphicon glyphicon-comment"></span> Submit
                </button>
             </div>
