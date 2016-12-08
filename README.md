@@ -20,6 +20,14 @@ Cameron Taylor
 
 ---
 
+# System Architecture
+
+Now You Know is built with a 3 tier service oriented architecture. All of the database infrastructure is stored in the `nowyouknow.common` package, all of the service infrastructure is stored in the `nowyouknow.service` package, and all of the front-end code is stored in `service/src/main/resources/public` and served statically.
+
+![system architecture](https://raw.githubusercontent.com/cpe305/fall2016-project-axis7818/master/docs/SystemArchitecture.png)
+
+---
+
 # Data Entities
 
 These objects are the main entities that are stored in the database. They exist in the `nowyouknow.common.data` package and represent database rows. Interactions with the database are done with the `nowyouknow.common.dao` package with CrudRepository interfaces. All Dao objects extend  Spring's [CrudRepository](http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html). Only additional methods are documented here.
@@ -35,6 +43,9 @@ These objects are the main entities that are stored in the database. They exist 
 
    <dt>name: String</dt>
    <dd>The name of the topic.</dd>
+
+   <dt>description: String</dt>
+   <dd>A short description of the topic.</dd>
 
    <dt>questions: List<Question></dt>
    <dd>A list of all questions under this topic.</dd>
