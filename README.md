@@ -8,7 +8,15 @@ Cameron Taylor
 
 ---
 
+![topic](https://raw.githubusercontent.com/cpe305/fall2016-project-axis7818/master/docs/topic.png)
 
+---
+
+![question](https://raw.githubusercontent.com/cpe305/fall2016-project-axis7818/master/docs/question.png)
+
+---
+
+![random](https://raw.githubusercontent.com/cpe305/fall2016-project-axis7818/master/docs/random.png)
 
 ---
 
