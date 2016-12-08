@@ -120,6 +120,43 @@ These objects are the main entities that are stored in the database. They exist 
 
 ---
 
+# System Design
+
+## Architecture
+
+### MVC
+
+The MVC pattern is used in two places: service controllers and Angular's front end.
+The service controllers hold methods (controller) that house business logic and access the database (model) accordingly.
+The results of these operations are passed to the front-end (view) when they have completed.
+
+Angular takes the resulting data from API calls and builds its own javascript objects to act as a model local to the browser.
+These model objects are presented in html form and controllers written in javascript handle user interactions, form validation, and communication with the service.
+
+### Dependency Injection
+
+The pattern of dependency injection is used throughout the entire project.
+All java classes are valid beans and all javascript components are wrapped as appropriate angular components.
+This means that every object in the system can be mocked and injected into other objects according to the needs of that object.
+For example, when testing the controllers, the DAO objects are mocked so that they do not perform any database accesses.
+This allows for true unit testing that isolates the controllers' behavior.
+
+## Design Patterns
+
+As it stands now, there are no GoF design patterns present in the NowYouKnow codebase.
+This is on purpose as there were no opportunities to leverage any of these design patterns in an appropriate fashion.
+I had intended to add a `Reactable` interface to use a bridge pattern, but since my Question and Answer classes needed to map directly to database tables, this was hard to do while preserving ORM (Object Relational Mapping).
+
+---
+
+# Key Learning
+
+The thing that I liked the best about my project was the use of dependency injection. Not only did this allow for strong and thorough unit tests, but it also allowed me to better take advantage of functionality offered by the Spring framework. The code that I wrote in this project follows "best practice" conventions closer than any other code I have written, and even though the overall project is not super complex, it is beautiful code to look at.
+
+The most important lesson that I learned was that Software Engineering is not just writing code. I already knew this, but I never had an appreciation for just how important it is to write good documentation and testing. Writing actual system code only took about 20% of my time working on the project.
+
+---
+
 # REST Resources
 
 Topic, Question, and Answer objects each have a corresponding class in `nowyouknow.service.results` that represents a flattened version of the object. These are the entities that are converted to/from json request bodies.
