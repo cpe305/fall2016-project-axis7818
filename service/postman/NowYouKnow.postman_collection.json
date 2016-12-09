@@ -279,6 +279,17 @@
 				},
 				{
 					"name": "Get Question 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
 					"request": {
 						"url": "{{host}}/question/{{q2_id}}",
 						"method": "GET",
@@ -402,7 +413,15 @@
 							"script": {
 								"type": "text/javascript",
 								"exec": [
-									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(\"q4_a1_id\", id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(\"q4_a1_id\");",
+									"}"
 								]
 							}
 						}
@@ -474,6 +493,224 @@
 					"request": {
 						"url": "{{host}}/topic/{{hhgttg_id}}/questions",
 						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "CPE 305 topic",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"var ID_KEY = \"cpe305_id\";",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(ID_KEY, id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(ID_KEY);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/topic/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"CPE 305\",\n\t\"description\": \"Individual Software Design & Development\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "When is the final?",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(\"finalQ_id\", id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(\"finalQ_id\");",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"When is the final?\",\n\t\"topicId\": {{cpe305_id}}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "like the question",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/{{finalQ_id}}/react/like",
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "like the question copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/{{finalQ_id}}/react/like",
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "like the question copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/question/{{finalQ_id}}/react/like",
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Tell when final is",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var ok = tests[\"Status code is 200\"] = responseCode.code === 200;",
+									"",
+									"if (ok) {",
+									"    var id = postman.getResponseHeader(\"Location\").split(\"/\").pop();",
+									"    postman.setEnvironmentVariable(\"whenFinalIs_id\", id);",
+									"}",
+									"else {",
+									"    postman.clearEnvironmentVariable(\"whenFinalIs_id\");",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/answer/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"text\": \"Monday Dec 12th @ 10:00\",\n\t\"questionId\": {{finalQ_id}}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "like the answer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "{{host}}/answer/{{whenFinalIs_id}}/react/like",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "formdata",
